@@ -1,0 +1,34 @@
+[x] high-level game design
+[x] skeleton user interface (responsive)
+[ ] controller object design
+	[ ] data
+	[ ] methods
+		[ ] game loop logic pseudo code
+		[ ] game loop logic
+		[ ] user input 
+			[ ] event handler callback
+	[ ] test drivers
+[ ] model object design
+	[ ] lexicon object design
+	[ ] data
+	[ ] methods
+	[ ] test drivers
+[ ] wire up controller to model
+[ ] ui/view implementation
+	[ ] stats ui
+		[ ] html
+		[ ] styling
+	[ ] play ui
+		[ ] keyboard input
+		[ ] labels
+		[ ] annunciators
+		[ ] segmented stop sign
+		[ ] html
+		[ ] styling
+	[ ] help ui
+		[ ] html
+		[ ] styling
+[ ] wire up controller to view
+[ ] function test
+[ ] styling refinement
+[ ] nice-to-haves
