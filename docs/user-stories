@@ -1,5 +1,11 @@
 [x] high-level game design
 [x] skeleton user interface (responsive)
+[x] model object design
+	[x] lexicon object design
+	[x] data
+	[x] methods
+	[x] test drivers
+
 [ ] controller object design
 	[ ] data
 	[ ] methods
@@ -7,11 +13,6 @@
 		[ ] game loop logic
 		[ ] user input 
 			[ ] event handler callback
-	[ ] test drivers
-[ ] model object design
-	[ ] lexicon object design
-	[ ] data
-	[ ] methods
 	[ ] test drivers
 [ ] wire up controller to model
 [ ] ui/view implementation
