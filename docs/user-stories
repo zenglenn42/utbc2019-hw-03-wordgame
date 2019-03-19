@@ -22,7 +22,10 @@
 		[ ] user input 
 			[ ] event handler callback
 	[ ] test drivers
+
 [ ] wire up controller to model
+[ ] wire up controller to view
+
 [ ] ui/view implementation
 	[ ] stats ui
 		[ ] styling
@@ -32,7 +35,6 @@
 	[ ] help ui
 		[ ] html
 		[ ] styling
-[ ] wire up controller to view
 [ ] function test
 [ ] styling refinement
 [ ] nice-to-haves
