@@ -5,6 +5,14 @@
 	[x] data
 	[x] methods
 	[x] test drivers
+[x] implement minimal ui
+	[x] stats ui 
+		[x] html
+	[x] play ui
+		[x] labels
+		[x] annunciators
+		[x] segmented stop sign
+		[x] html
 
 [ ] controller object design
 	[ ] data
@@ -17,14 +25,9 @@
 [ ] wire up controller to model
 [ ] ui/view implementation
 	[ ] stats ui
-		[ ] html
 		[ ] styling
 	[ ] play ui
 		[ ] keyboard input
-		[ ] labels
-		[ ] annunciators
-		[ ] segmented stop sign
-		[ ] html
 		[ ] styling
 	[ ] help ui
 		[ ] html
