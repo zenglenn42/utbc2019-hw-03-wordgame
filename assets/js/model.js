@@ -21,7 +21,7 @@ Game.prototype.getLosses = function() {
     return this.losses;
 }
 Game.prototype.incLosses = function() {
-        this.losses;
+        this.losses++;
 }
 Game.prototype.setLosses = function(n) {
     this.losses = n;
