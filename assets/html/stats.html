@@ -8,7 +8,10 @@
       rel="stylesheet"
       href="../css/bootstrap-4.3.1.min.css"
     />
+    <script src="../js/jquery-3.3.1.slim.min.js"></script>
+    <script src="../js/bootstrap-4.3.1.bundle.min.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
+    <script type="text/javascript" src="../js/controller.js"></script>
   </head>
   <body>
     <header>
@@ -39,9 +42,14 @@
         </p>
       </div>
     </main>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      UnitTestController();
+    })
+    </script>
     
     <footer>&copy; Copyright</footer>
-    <script src="../js/jquery-3.3.1.slim.min.js"></script>
-    <script src="../js/bootstrap-4.3.1.bundle.min.js"></script>
+
   </body>
 </html>
