@@ -78,12 +78,6 @@ WordStop.prototype.reset = function() {
     this.lettersUsed = [];
 }
 
-WordStop.prototype.showLettersUsed = function() {
-    let id = document.getElementById("letters-used");
-    var lettersUsed = this.getLettersUsed();
-    if (id) id.textContent = lettersUsed;
-}
-
 //
 // Define object model for the lexicon.
 //

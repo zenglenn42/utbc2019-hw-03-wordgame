@@ -138,11 +138,17 @@ Controller.prototype.getKeyboardEventCallback = function() {
             that.guessedLetter = e.key.toLowerCase();;
             // add guessed letter to the game model
             that.gameObj.addLetterUsed(that.guessedLetter);
-            that.gameObj.showLettersUsed();
+            that.showLettersUsed();
         }
         that.resetGuessedLetterForm();
     }
     return keyboardCallback;
+}
+
+Controller.prototype.showLettersUsed = function() {
+    let id = document.getElementById("letters-used");
+    var lettersUsed = this.gameObj.getLettersUsed();
+    if (id && lettersUsed) id.textContent = lettersUsed;
 }
 
 Controller.prototype.resetGuessedLetterForm = function() {
