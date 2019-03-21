@@ -116,58 +116,6 @@ main p#main-content {
   font-size: 0.9em;
 }
 
-main img.help {
-  float: left;
-  height: 50%;
-  margin: 2.5%;
-  margin-left: 0;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-  width: 50%;
-}
-
-@media screen and (max-width: 640px) {
-  main img.help {
-    margin: 1em auto;
-    width: 100%;
-  }
-}
-
-main #portfolio-items {
-  padding-top: 1em;
-}
-
-main .portfolio-img {
-  width: 170px; /* Ug, death to px. */
-}
-
-main figure.portfolio-item {
-  max-width: 204px; /* Hacky fix for firefox. */
-  max-width: min-content;
-  margin: auto;
-  margin-bottom: 1em;
-  padding: 1em;
-  border: 1px solid darkslategray;
-  border-radius: 0.2em;
-  box-shadow: 5px 0 5px -5px black, -5px 0 5px -5px black;
-}
-
-@media screen and (max-width: 640px) {
-  /* Single column of items on phones. */
-  main figure.portfolio-item {
-    margin: 0 auto;
-    margin-bottom: 1em;
-  }
-}
-
-main figcaption.portfolio-caption {
-  background-color: teal;
-  color: white;
-  font-family: times;
-  font-size: 1.15em;
-  text-align: center;
-}
-
 footer {
   background-color: #555;
   border-top-style: solid;
