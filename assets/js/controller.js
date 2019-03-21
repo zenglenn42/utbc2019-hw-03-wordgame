@@ -13,9 +13,14 @@ Controller.prototype.gameObj = null
 Controller.prototype.guessedLetter = "";
 
 Controller.prototype.init = function() {
+    // instantiate model
     this.gameObj = new WordStop();
     this.gameObj.reset();
+
+    // reset controller
     this.reset();
+    
+    // register input listeners
     this.addMenuEventListeners();
     this.addKeyboardEventListener();
 }
@@ -135,14 +140,19 @@ Controller.prototype.getKeyboardEventCallback = function() {
     let that = this;
     function keyboardCallback(e) {
         if (e.keyCode >= 65 && e.keyCode <= 90) {
-            that.guessedLetter = e.key.toLowerCase();;
-            // add guessed letter to the game model
-            that.gameObj.addLetterUsed(that.guessedLetter);
-            that.showLettersUsed();
+            // console.log(e);
+            that.takeTurn(e.key.toLowerCase());
         }
         that.resetGuessedLetterForm();
     }
     return keyboardCallback;
+}
+
+Controller.prototype.takeTurn = function(userGuess) {
+    this.guessedLetter = userGuess;
+    // add guessed letter to the game model
+    this.gameObj.addLetterUsed(this.guessedLetter);
+    this.showLettersUsed();
 }
 
 Controller.prototype.showLettersUsed = function() {
@@ -168,6 +178,10 @@ Controller.prototype.reset = function() {
     this.showGameName();
     this.setFocus();
     this.resetGuessedLetterForm();
+}
+
+Controller.prototype.play = function() {
+    this.init()
 }
 
 function UnitTestController() {
