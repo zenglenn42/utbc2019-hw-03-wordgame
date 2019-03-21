@@ -22,7 +22,11 @@
             <a class="navbar-brand" href="#"><span id="game-name"></span></a>
           </div>
           <p class="navbar-text navbar-right">
-            <a href="#" class="btn btn-primary navbar-btn" role="button"
+            <a
+              href="#"
+              class="btn btn-primary navbar-btn"
+              id="play-button"
+              role="button"
               >Play</a
             >
             <a href="#" class="navbar-link" id="stats-link">Stats</a>
@@ -38,7 +42,15 @@
         <hr />
         <p>Guess the word: <span id="word-to-guess">- - - - - -</span></p>
         <p></p>
-        <p>Pick a letter:</p>
+        <form class="guessed-letter-form">
+          <label for="guessed-letter-input">Pick a letter ...</label>
+          <input
+            type="text"
+            class="form-control"
+            id="guessed-letter-input"
+            placeholder="a"
+          />
+        </form>
         <p>Letters used: <span id="letters-used"></span></p>
         <p>Guesses left: <span id="guesses-left"></span></p>
 

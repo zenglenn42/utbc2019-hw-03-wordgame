@@ -78,13 +78,28 @@ Controller.prototype.drawNextStopSegment = function() {
 }
 
 Controller.prototype.addMenuEventListeners = function() {
+    
+    let playId = document.getElementById("play-button");
+    playId.addEventListener('click', this.getPlayMenuEventCallback(), false);
+
     let statsId = document.getElementById("stats-link");
-    // Need closure to fetch callback else 'this' will
-    // be bound to the html element and not the controller object
-    // as desired.
     statsId.addEventListener('click', this.getStatsMenuEventCallback(),false);
+
     let helpId = document.getElementById("help-link");
     helpId.addEventListener('click', this.getHelpMenuEventCallback(), false);
+}
+
+// Use closures to sequester 'this' properly for navbar menu item callbacks.
+// Otherwise 'this' will be bound to the triggering html navbar element
+// and not the controller object as needed.
+
+Controller.prototype.getPlayMenuEventCallback = function() {
+    let that = this;
+    function menuCallback(e) {
+        that.reset();
+        that.setFocus();
+    }
+    return menuCallback;
 }
 
 Controller.prototype.getStatsMenuEventCallback = function() {
@@ -94,6 +109,7 @@ Controller.prototype.getStatsMenuEventCallback = function() {
         let lossesStr = `Losses: ${that.gameObj.losses}`;
         let alertStr = `Game Stats\n${winStr}\n${lossesStr}`;
         alert(alertStr);
+        that.setFocus();
     }
     return menuCallback;
 }
@@ -103,8 +119,14 @@ Controller.prototype.getHelpMenuEventCallback = function() {
     function menuCallback(e) {
         let helpStr = that.gameObj.helpText;
         alert(helpStr);
+        that.setFocus();
     }
     return menuCallback;
+}
+
+Controller.prototype.setFocus = function() {
+    let id = document.getElementById("guessed-letter-input");
+    id.focus();
 }
 
 Controller.prototype.reset = function() {
@@ -112,6 +134,7 @@ Controller.prototype.reset = function() {
     this.allSegmentsDrawn = false;
     this.resetStopSign();
     this.showGameName();
+    this.setFocus();
 }
 
 function UnitTestController() {
@@ -127,5 +150,6 @@ function UnitTestController() {
     for (let i = 1; i <= cntlr.MAX_SEGMENTS; i++) {
         cntlr.drawNextStopSegment();
     }
+
     // cntlr.reset();
 }
