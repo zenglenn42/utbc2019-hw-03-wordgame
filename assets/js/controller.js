@@ -24,11 +24,6 @@ Controller.prototype.showGameName = function() {
     if (id) id.textContent = gameName;
 }
 
-Controller.prototype.showLevel = function() {
-    let id = document.getElementById("level");
-    if (id) id.textContent = "level";
-}
-
 Controller.prototype.showGuessesLeft = function () {
     let id = document.getElementById("guesses-left");
     if (id) id.textContent = "guesses";
@@ -125,7 +120,6 @@ function UnitTestController() {
     console.log(cntlr.gameObj.getName());
     cntlr.gameObj.wins = 3;
     cntlr.showGameName();
-    cntlr.showLevel();
     cntlr.showGuessesLeft();
     cntlr.showLettersUsed();
     cntlr.showWordToGuess();
