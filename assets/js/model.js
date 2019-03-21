@@ -7,6 +7,7 @@ Game.prototype.level = 0;
 Game.prototype.levels = ["beginner", "intermediate", "advanced"];
 Game.prototype.losses = 0;
 Game.prototype.wins = 0;
+Game.prototype.name = "Game";
 Game.prototype.getLevel = function() {
     return this.level;
 }
@@ -40,6 +41,9 @@ Game.prototype.reset = function() {
     this.losses = 0;
     this.wins = 0;
 }
+Game.prototype.getName = function() {
+    return this.name;
+}
 
 //
 // Define object model for the WordStop game.
@@ -48,17 +52,21 @@ Game.prototype.reset = function() {
 function WordStop() { }
 WordStop.prototype = new Game();                // Inherit from Game.
 WordStop.prototype.__proto__ = Game.prototype;
+WordStop.prototype.name = "Word Stop";          // For user interface skin.
 WordStop.prototype.badGuessesLeft = 8;
 WordStop.prototype.currentGuess = "";
 WordStop.prototype.currentWord = "";
 WordStop.prototype.lettersUsed = [];
+
 WordStop.prototype.getLettersUsed = function() {
     var letterStr = this.lettersUsed.join("");
     return letterStr;
 }
+
 WordStop.prototype.addLetterUsed = function(letter) {
     this.lettersUsed.push(letter);
 }
+
 WordStop.prototype.reset = function() {
     this.badGuessesLeft = 8;
     this.currentGuess = "";
@@ -73,14 +81,17 @@ WordStop.prototype.reset = function() {
 function Lexicon() { }
 Lexicon.prototype.words = ["random", "words", "yay"];
 Lexicon.prototype.wordsUsed = [];
+
 Lexicon.prototype.getWord = function() {
     var rindex = Math.floor(Math.random() * (this.words.length));
     return this.words[rindex];
 }
+
 Lexicon.prototype.getLengthWord = function(n) { return "nlengthword"}
 
 function UnitTestWordStopModel() {
     var ws = new WordStop();
+    console.log(ws.getName());
     ws.setWins(2);
     var wins = ws.getWins();
     console.log("wins", wins);
