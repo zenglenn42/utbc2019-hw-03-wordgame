@@ -57,6 +57,7 @@ WordStop.prototype.badGuessesLeft = 8;
 WordStop.prototype.currentGuess = "";
 WordStop.prototype.currentWord = "";
 WordStop.prototype.lettersUsed = [];
+WordStop.prototype.helpText = "Lorem ipsum dolor sit amet.  Help, I don't know Latin!";
 
 WordStop.prototype.getLettersUsed = function() {
     var letterStr = this.lettersUsed.join("");
