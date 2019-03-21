@@ -10,12 +10,14 @@ Controller.prototype.MAX_SEGMENTS = 8;
 Controller.prototype.nextSegment = 1;
 Controller.prototype.allSegmentsDrawn = false;
 Controller.prototype.gameObj = null
+Controller.prototype.guessedLetter = "";
 
 Controller.prototype.init = function() {
     this.gameObj = new WordStop();
     this.gameObj.reset();
     this.reset();
     this.addMenuEventListeners();
+    this.addKeyboardEventListener();
 }
 
 Controller.prototype.showGameName = function() {
@@ -124,6 +126,30 @@ Controller.prototype.getHelpMenuEventCallback = function() {
     return menuCallback;
 }
 
+Controller.prototype.addKeyboardEventListener = function() {
+    let id = document.getElementById("guessed-letter-input");
+    id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
+}
+
+Controller.prototype.getKeyboardEventCallback = function() {
+    let that = this;
+    function keyboardCallback(e) {
+        if (e.keyCode >= 65 && e.keyCode <= 90) {
+            that.guessedLetter = e.key.toLowerCase();;
+            // add guessed letter to the game model
+            that.gameObj.addLetterUsed(that.guessedLetter);
+            that.gameObj.showLettersUsed();
+        }
+        that.resetGuessedLetterForm();
+    }
+    return keyboardCallback;
+}
+
+Controller.prototype.resetGuessedLetterForm = function() {
+    let id = document.getElementById("guessed-letter-form");
+    id.reset();
+}
+
 Controller.prototype.setFocus = function() {
     let id = document.getElementById("guessed-letter-input");
     id.focus();
@@ -135,6 +161,7 @@ Controller.prototype.reset = function() {
     this.resetStopSign();
     this.showGameName();
     this.setFocus();
+    this.resetGuessedLetterForm();
 }
 
 function UnitTestController() {

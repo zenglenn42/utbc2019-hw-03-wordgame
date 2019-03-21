@@ -65,7 +65,10 @@ WordStop.prototype.getLettersUsed = function() {
 }
 
 WordStop.prototype.addLetterUsed = function(letter) {
-    this.lettersUsed.push(letter);
+    // Create a set of letters guessed already.
+    if (!this.lettersUsed.includes(letter)) {
+        this.lettersUsed.push(letter);
+    }
 }
 
 WordStop.prototype.reset = function() {
@@ -73,6 +76,12 @@ WordStop.prototype.reset = function() {
     this.currentGuess = "";
     this.currentWord = ""
     this.lettersUsed = [];
+}
+
+WordStop.prototype.showLettersUsed = function() {
+    let id = document.getElementById("letters-used");
+    var lettersUsed = this.getLettersUsed();
+    if (id) id.textContent = lettersUsed;
 }
 
 //
