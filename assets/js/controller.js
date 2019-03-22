@@ -12,7 +12,6 @@ Controller.prototype.allSegmentsDrawn = false;
 Controller.prototype.gameObj = null
 Controller.prototype.guessedLetter = "";
 
-
 Controller.prototype.play = function() {
     this.init()
 }
@@ -113,8 +112,8 @@ Controller.prototype.drawNextStopSegment = function() {
 
 Controller.prototype.addMenuEventListeners = function() {
     
-    // let hintId = document.getElementById("navbar-btn");
-    // hintId.addEventListener('click', this.getHintMenuEventCallback(), false);
+    let hintId = document.getElementById("navbar-btn");
+    hintId.addEventListener('click', this.getHintMenuEventCallback(), false);
 
     let statsId = document.getElementById("stats-link");
     statsId.addEventListener('click', this.getStatsMenuEventCallback(),false);
@@ -130,7 +129,14 @@ Controller.prototype.addMenuEventListeners = function() {
 Controller.prototype.getHintMenuEventCallback = function() {
     let that = this;
     function menuCallback(e) {
-        that.reset();
+        if (that.gameObj.getPlayState() == "playing") {
+            let ch = that.gameObj.getHintLetter();
+            if (ch !== -1) {
+                alert("Hint: Try '" + ch + "'");
+            } else {
+                alert("Hint: No more hints left. :-/");
+            }
+        }
         that.setFocus();
     }
     return menuCallback;
@@ -162,14 +168,6 @@ Controller.prototype.addKeyboardEventListener = function() {
     let id = document.getElementById("guessed-letter-input");
     id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
 }
-
-// Doesn't seem to work...thinking it could be the closure.
-// in removeEventListener.
-//
-// Controller.prototype.removeKeyboardEventListener = function() {
-//     let id = document.getElementById("guessed-letter-input");
-//     id.removeEventListener('keyup', this.getKeyboardEventCallback());
-// }
 
 Controller.prototype.getKeyboardEventCallback = function() {
     let that = this;
@@ -269,6 +267,27 @@ Controller.prototype.showStatusText = function(text, bgColor = "teal") {
         text-align: center`);
     id.textContent = text;
 }
+
+// Controller.prototype.unHideHintButton = function() {
+//     const mq = window.matchMedia("(max-width: 640px)");
+//     let id = document.querySelector("a#navbar-btn");
+//     if (mq.matches) {
+//         id.style.display = "inline";
+//         id.style.visibility = "visible";
+//     } else {
+//         id.style.visibility = "visible";
+//     }
+// }
+
+// Controller.prototype.HideHintButton = function() {
+//     const mq = window.matchMedia("(max-width: 640px)");
+//     let id = document.getElementById("navbar-btn");
+//     if (mq.matches) {
+//         id.style.display = "none";
+//     } else {
+//         id.style.visibility = "invisible";
+//     }
+// }
 
 function UnitTestController() {
     var cntlr = new Controller();

@@ -66,6 +66,14 @@ You get 8 wrong guesses at letters in the word before the game is over.\
 WordStop.prototype.lexicon = new Lexicon();
 WordStop.prototype.playState = "playing"; // "playing" | "won" | "lost"
 
+WordStop.prototype.getHintLetter = function() {
+    var results = this.currentGuess.indexOf("-");
+    if (results !== -1) {
+        results = this.currentWord[results];
+    }
+    return results;
+}
+
 WordStop.prototype.getLettersUsed = function() {
     var letterStr = this.lettersUsed.join("");
     return letterStr;
