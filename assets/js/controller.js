@@ -36,6 +36,7 @@ Controller.prototype.reset = function() {
         this.addKeyboardEventListener();
         this.showGuessesLeft();
         this.showWordToGuess();
+        this.showLettersUsed();
     } // else all the words were played.  TODO: Handle more gracefully.
 }
 
@@ -50,9 +51,10 @@ Controller.prototype.showGuessesLeft = function () {
     if (id) id.textContent = this.gameObj.getGuessesLeft();
 }
 
-Controller.prototype.showLettersUsed = function () {
+Controller.prototype.showLettersUsed = function() {
     let id = document.getElementById("letters-used");
-    if (id) id.textContent = this.gameObj.lettersUsed;
+    var lettersUsed = this.gameObj.getLettersUsed();
+    if (id) id.textContent = lettersUsed;
 }
 
 Controller.prototype.showWordToGuess = function () {
@@ -176,7 +178,6 @@ Controller.prototype.showLoser = function() {
 Controller.prototype.takeTurn = function(userGuess) {
     this.guessedLetter = userGuess;
     let goodGuess = this.gameObj.takeTurn(userGuess);
-    // add guessed letter to the game model
     this.showWordToGuess();
     this.showLettersUsed();
     this.showGuessesLeft();
@@ -185,28 +186,22 @@ Controller.prototype.takeTurn = function(userGuess) {
     }
     switch (this.gameObj.getPlayState()) {
         case "won": 
-            this.gameObj.incWins();
             // this.showWinner();
+
+            // Hacky fix for strange race condition where by alert pops
+            // up before the DOM has updated with completed word the
+            // user just guessed.  Otherwise last letter
+            // will be truncated.
+
             var timeout = setTimeout(this.showWinner, 250);
             this.reset();
             break;
         case "lost":
-            this.gameObj.incLosses();
-            // Hacky fix for strange race condition where by alert pops
-            // up before the DOM has updated with 0 guesses left. :-/
-            // Otherwise display will say 1 guess is still left (which is a lie).
-
             // this.showLoser
             var timeout = setTimeout(this.showLoser, 250);
             this.reset();
             break;
     }
-}
-
-Controller.prototype.showLettersUsed = function() {
-    let id = document.getElementById("letters-used");
-    var lettersUsed = this.gameObj.getLettersUsed();
-    if (id && lettersUsed) id.textContent = lettersUsed;
 }
 
 Controller.prototype.resetGuessedLetterForm = function() {

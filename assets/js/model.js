@@ -112,6 +112,7 @@ WordStop.prototype.takeTurn = function(ch) {
         }
         if (this.badGuessesLeft == 0) {
             this.playState = "lost";
+            this.incLosses();
         }
         return false; // incorrectly guessed letter
     } else {
@@ -124,6 +125,7 @@ WordStop.prototype.takeTurn = function(ch) {
         }
         if (this.currentGuess == this.currentWord) {
             this.playState = "won"
+            this.incWins();
         }
         return true;  // correct guessed letter
     }
