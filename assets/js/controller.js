@@ -155,9 +155,12 @@ Controller.prototype.addKeyboardEventListener = function() {
     id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
 }
 
+// Doesn't seem to work...thinking it could be the closure.
+// in removeEventListener.
+//
 // Controller.prototype.removeKeyboardEventListener = function() {
 //     let id = document.getElementById("guessed-letter-input");
-//     id.removeEventListener('keyup', this);
+//     id.removeEventListener('keyup', this.getKeyboardEventCallback());
 // }
 
 Controller.prototype.getKeyboardEventCallback = function() {
