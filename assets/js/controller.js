@@ -17,6 +17,7 @@ Controller.prototype.play = function() {
     this.init()
 }
 
+// Call this once per session.
 Controller.prototype.init = function() {
     // instantiate model
     this.gameObj = new WordStop();
@@ -26,8 +27,10 @@ Controller.prototype.init = function() {
 
     // register input listeners
     this.addMenuEventListeners();
+    this.addKeyboardEventListener();
 }
 
+// Call this with each new round.
 Controller.prototype.reset = function() {
     this.nextSegment = 1;
     this.allSegmentsDrawn = false;
@@ -38,7 +41,6 @@ Controller.prototype.reset = function() {
     // Fetch a new word and reset game state.
     if (this.gameObj.reset()) {
         console.log("Controller.reset() new word = ", this.gameObj.currentWord);
-        this.addKeyboardEventListener();
         this.showGuessesLeft();
         this.showWordToGuess();
         this.showLettersUsed();
@@ -92,14 +94,27 @@ Controller.prototype.resetStopSign = function() {
 }
 
 Controller.prototype.drawNextStopSegment = function() {
-    if (this.nextSegment <= this.MAX_SEGMENTS) {
-        this.drawStopSegment(this.nextSegment++);
-    }
+    // TODO: Open issue for this.
+    //
+    // The bit of guard logic you see addresses an issue
+    // with the stop sign getting updated after one round
+    // has finished but before the next has started.
+    //
+    // Wondering if there is subtle data buffering issue
+    // with my keyboard handler.  It /seems/ like the last
+    // guessed letter from the previous round is still in 
+    // the input buffer and sometimes bleeds into the next
+    // round.
+    if (this.gameObj.getPlayState() == "playing") {
+        if (this.nextSegment <= this.MAX_SEGMENTS) {
+            this.drawStopSegment(this.nextSegment++);
+        }
 
-    if (this.nextSegment > this.MAX_SEGMENTS) {
-        this.allSegmentsDrawn = true;
-        let id = document.getElementById("stop-text");
-        if (id) id.setAttribute("style", "color: white; background-color: red");
+        if (this.nextSegment > this.MAX_SEGMENTS) {
+            this.allSegmentsDrawn = true;
+            let id = document.getElementById("stop-text");
+            if (id) id.setAttribute("style", "color: white; background-color: red");
+        }
     }
 }
 
@@ -184,13 +199,24 @@ Controller.prototype.takeTurn = function(userGuess) {
     if (!goodGuess) {
         this.drawNextStopSegment();
     }
+    let statusText = "";
     switch (this.gameObj.getPlayState()) {
         case "won": 
-            this.showStatusText("You won! :-)");
+            statusText = "You won! :-)"
+            // TODO: Fix race condition here.  Alert box pops up before
+            // status text has been written to the DOM :-/
+            this.showStatusText(statusText);
+            statusText += "\n\nYou guessed: " + this.gameObj.currentWord;
+            alert(statusText);
             this.reset();
             break;
         case "lost":
-            this.showStatusText("You lost. Better luck next time.");
+            statusText = "You lost.  Better luck next time."
+            // TODO: Fix race condition here.  Alert box pops up before
+            // status text has been written to the DOM :-/
+            this.showStatusText(statusText);
+            statusText += "\n\nThe word was: " + this.gameObj.currentWord;
+            alert(statusText);
             this.reset();
             break;
     }
