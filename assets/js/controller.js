@@ -12,6 +12,11 @@ Controller.prototype.allSegmentsDrawn = false;
 Controller.prototype.gameObj = null
 Controller.prototype.guessedLetter = "";
 
+
+Controller.prototype.play = function() {
+    this.init()
+}
+
 Controller.prototype.init = function() {
     // instantiate model
     this.gameObj = new WordStop();
@@ -37,7 +42,6 @@ Controller.prototype.reset = function() {
         this.showGuessesLeft();
         this.showWordToGuess();
         this.showLettersUsed();
-        this.setStatusText("Pick a letter!");
     } // else all the words were played.  TODO: Handle more gracefully.
 }
 
@@ -97,10 +101,6 @@ Controller.prototype.drawNextStopSegment = function() {
         let id = document.getElementById("stop-text");
         if (id) id.setAttribute("style", "color: white; background-color: red");
     }
-}
-
-Controller.prototype.play = function() {
-    this.init()
 }
 
 Controller.prototype.addMenuEventListeners = function() {
@@ -183,11 +183,11 @@ Controller.prototype.takeTurn = function(userGuess) {
     }
     switch (this.gameObj.getPlayState()) {
         case "won": 
-            this.setStatusText("You won! :-)");
+            this.showStatusText("You won! :-)");
             this.reset();
             break;
         case "lost":
-            this.setStatusText("You lost. Better luck next time.");
+            this.showStatusText("You lost. Better luck next time.");
             this.reset();
             break;
     }
@@ -203,7 +203,7 @@ Controller.prototype.setFocus = function() {
     id.focus();
 }
 
-Controller.prototype.setStatusText = function(text) {
+Controller.prototype.showStatusText = function(text) {
     let id = document.getElementById("status-text");
     id.textContent = text;
 }
