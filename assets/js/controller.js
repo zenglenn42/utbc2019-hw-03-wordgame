@@ -18,6 +18,7 @@ Controller.prototype.play = function() {
 }
 
 // Call this once per session.
+
 Controller.prototype.init = function() {
     // instantiate model
     this.gameObj = new WordStop();
@@ -31,6 +32,7 @@ Controller.prototype.init = function() {
 }
 
 // Call this with each new round.
+
 Controller.prototype.reset = function() {
     this.nextSegment = 1;
     this.allSegmentsDrawn = false;
@@ -44,7 +46,10 @@ Controller.prototype.reset = function() {
         this.showGuessesLeft();
         this.showWordToGuess();
         this.showLettersUsed();
-    } // else all the words were played.  TODO: Handle more gracefully.
+        this.showStatusText("Pick a letter!")
+    } else {
+        this.showStatusText("You've played all the words I know.");
+    }
 }
 
 Controller.prototype.showGameName = function() {
@@ -67,6 +72,7 @@ Controller.prototype.showLettersUsed = function() {
 Controller.prototype.showWordToGuess = function () {
     let id = document.getElementById("word-to-guess");
     if (id) id.textContent = this.gameObj.currentGuess;
+    this.forceDOMrender();
 }
 
 Controller.prototype.drawStopSegment = function(n) {
@@ -94,27 +100,14 @@ Controller.prototype.resetStopSign = function() {
 }
 
 Controller.prototype.drawNextStopSegment = function() {
-    // TODO: Open issue for this.
-    //
-    // The bit of guard logic you see addresses an issue
-    // with the stop sign getting updated after one round
-    // has finished but before the next has started.
-    //
-    // Wondering if there is subtle data buffering issue
-    // with my keyboard handler.  It /seems/ like the last
-    // guessed letter from the previous round is still in 
-    // the input buffer and sometimes bleeds into the next
-    // round.
-    if (this.gameObj.getPlayState() == "playing") {
-        if (this.nextSegment <= this.MAX_SEGMENTS) {
-            this.drawStopSegment(this.nextSegment++);
-        }
+    if (this.nextSegment <= this.MAX_SEGMENTS) {
+        this.drawStopSegment(this.nextSegment++);
+    }
 
-        if (this.nextSegment > this.MAX_SEGMENTS) {
-            this.allSegmentsDrawn = true;
-            let id = document.getElementById("stop-text");
-            if (id) id.setAttribute("style", "color: white; background-color: red");
-        }
+    if (this.nextSegment > this.MAX_SEGMENTS) {
+        this.allSegmentsDrawn = true;
+        let id = document.getElementById("stop-text");
+        if (id) id.setAttribute("style", "color: white; background-color: red");
     }
 }
 
@@ -181,50 +174,86 @@ Controller.prototype.addKeyboardEventListener = function() {
 Controller.prototype.getKeyboardEventCallback = function() {
     let that = this;
     function keyboardCallback(e) {
+        that.resetGuessedLetterForm();
         if (e.keyCode >= 65 && e.keyCode <= 90) {
             // console.log(e);
             that.takeTurn(e.key.toLowerCase());
         }
-        that.resetGuessedLetterForm();
     }
     return keyboardCallback;
 }
 
+// Primary game-flow logic.
+
 Controller.prototype.takeTurn = function(userGuess) {
     this.guessedLetter = userGuess;
     let goodGuess = this.gameObj.takeTurn(userGuess);
-    this.showWordToGuess();
-    this.showLettersUsed();
-    this.showGuessesLeft();
     if (!goodGuess) {
         this.drawNextStopSegment();
     }
-    let statusText = "";
+    this.showWordToGuess();
+    this.showLettersUsed();
+    this.showGuessesLeft();
+
     switch (this.gameObj.getPlayState()) {
         case "won": 
             statusText = "You won! :-)"
-            // TODO: Fix race condition here.  Alert box pops up before
-            // status text has been written to the DOM :-/
-            this.showStatusText(statusText);
-            statusText += "\n\nYou guessed: " + this.gameObj.currentWord;
-            alert(statusText);
-            this.reset();
+            this.syncShowWinner(statusText);
             break;
         case "lost":
-            statusText = "You lost.  Better luck next time."
-            // TODO: Fix race condition here.  Alert box pops up before
-            // status text has been written to the DOM :-/
-            this.showStatusText(statusText);
-            statusText += "\n\nThe word was: " + this.gameObj.currentWord;
-            alert(statusText);
-            this.reset();
+            statusText = "You lost."
+            this.syncShowLoser(statusText);
             break;
     }
+}
+
+Controller.prototype.syncShowWinner = function(str) {
+    this.showStatusText(str, "green");
+    Controller.prototype.forceDOMrender();
+    // pause before resetting for next round of play
+    let msecsPause = 3000;
+    setTimeout(this.getResetCallback(), msecsPause);
+}
+
+Controller.prototype.getResetCallback = function() {
+    var that = this;
+    function callback() {
+        that.reset();
+    }
+    return callback;
+}
+
+Controller.prototype.syncShowLoser = function(str) {
+    str += " Word was: '" + this.gameObj.currentWord + "'";    
+    this.showStatusText(str, "rebeccapurple");
+    Controller.prototype.forceDOMrender();
+    // pause before resetting for next round of play
+    let msecsPause = 6000;
+    setTimeout(this.getResetCallback(), msecsPause);
+}
+
+// It appears I don't need this expedience now that I've added
+// timeouts inbetween rounds of play. :-)
+
+Controller.prototype.forceDOMrender = function() {
+    return;
+    // Since DOM rendering is not synchronous, there are times
+    // when we want to force the browser to render.
+    //
+    // Attempting to trigger DOM repaint by these hacks.
+    //
+    // let mcId = document.getElementById("main-container");
+    // mcId.style.display = "none";
+    // mcId.style.display = "block";
+    // let glfId = document.getElementById("guessed-letter-form");
+    // glfId.style.display = "none";
+    // glfId.style.display = "block";  
 }
 
 Controller.prototype.resetGuessedLetterForm = function() {
     let id = document.getElementById("guessed-letter-form");
     id.reset();
+    this.forceDOMrender();
 }
 
 Controller.prototype.setFocus = function() {
@@ -232,8 +261,12 @@ Controller.prototype.setFocus = function() {
     id.focus();
 }
 
-Controller.prototype.showStatusText = function(text) {
+Controller.prototype.showStatusText = function(text, bgColor = "teal") {
     let id = document.getElementById("status-text");
+    if (id) id.setAttribute("style", 
+        `background-color: ${bgColor};
+        color: white;
+        text-align: center`);
     id.textContent = text;
 }
 
