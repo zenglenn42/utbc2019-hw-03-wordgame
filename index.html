@@ -22,12 +22,13 @@
             <a class="navbar-brand" href="#"><span id="game-name"></span></a>
           </div>
           <p class="navbar-text navbar-right">
+            <!-- Optional feature.  Hidden for now (via css). -->
             <a
               href="#"
               class="btn btn-primary navbar-btn"
-              id="play-button"
+              id="navbar-btn"
               role="button"
-              >Play</a
+              >Hint</a
             >
             <a href="#" class="navbar-link" id="stats-link">Stats</a>
             <a href="#" class="navbar-link" id="help-link">Help</a>
@@ -40,10 +41,10 @@
       <div class="container" id="main-container">
         <p class="row" id="main-label">Play</p>
         <hr />
-        <p>Guess the word: <span id="word-to-guess">- - - - - -</span></p>
+        <p>Guess the word: <span id="word-to-guess"></span></p>
         <p></p>
         <form class="guessed-letter-form" id="guessed-letter-form">
-          <label for="guessed-letter-input">Pick a letter ...</label>
+          <!-- <label for="guessed-letter-input">Pick a letter ...</label> -->
           <input
             type="text"
             class="form-control"
@@ -76,6 +77,12 @@
           ><br />
           &nbsp;&nbsp;&nbsp;<span id="stop-seg-1">--</span
           >&nbsp;&nbsp;&nbsp;<br />
+        </div>
+        <div
+          id="status-text"
+          style="text-align: center; background-color: teal; color: white"
+        >
+          Pick a letter!
         </div>
       </div>
     </main>

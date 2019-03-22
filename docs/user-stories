@@ -17,25 +17,27 @@
 [x] wire up controller to view
 [x] refactor to single page of html
 
-[ ] controller object design
-	[ ] data
-	[ ] methods
-		[ ] game loop logic pseudo code
-		[ ] game loop logic
+[x] controller object design
+	[x] data
+	[x] methods
+		[x] game loop logic
 		[x] user input 
 			[x] event handler callback
-	[ ] test drivers
+	[x] test drivers
 
-
-[ ] ui/view implementation
+[x] ui/view implementation
 	[x] stats pulled from game model
 	[x] stats displayed in alert box
-	[ ] play ui
-		[ ] keyboard input
-		[ ] styling
+	[x] play ui
+		[x] keyboard input
 	[x] help text in game model
 	[x] help text displayed in alert box
+
+[ ] ui/view implementation
+	[ ] play ui
+		[ ] styling
 	[ ] final help text inserted
+
 [ ] function test
 [ ] styling refinement
 [ ] nice-to-haves

@@ -12,17 +12,39 @@ Controller.prototype.allSegmentsDrawn = false;
 Controller.prototype.gameObj = null
 Controller.prototype.guessedLetter = "";
 
+
+Controller.prototype.play = function() {
+    this.init()
+}
+
+// Call this once per session.
 Controller.prototype.init = function() {
     // instantiate model
     this.gameObj = new WordStop();
-    this.gameObj.reset();
 
     // reset controller
     this.reset();
-    
+
     // register input listeners
     this.addMenuEventListeners();
     this.addKeyboardEventListener();
+}
+
+// Call this with each new round.
+Controller.prototype.reset = function() {
+    this.nextSegment = 1;
+    this.allSegmentsDrawn = false;
+    this.resetStopSign();
+    this.showGameName();
+    this.setFocus();
+    this.resetGuessedLetterForm();
+    // Fetch a new word and reset game state.
+    if (this.gameObj.reset()) {
+        console.log("Controller.reset() new word = ", this.gameObj.currentWord);
+        this.showGuessesLeft();
+        this.showWordToGuess();
+        this.showLettersUsed();
+    } // else all the words were played.  TODO: Handle more gracefully.
 }
 
 Controller.prototype.showGameName = function() {
@@ -33,17 +55,18 @@ Controller.prototype.showGameName = function() {
 
 Controller.prototype.showGuessesLeft = function () {
     let id = document.getElementById("guesses-left");
-    if (id) id.textContent = "guesses";
+    if (id) id.textContent = this.gameObj.getGuessesLeft();
 }
 
-Controller.prototype.showLettersUsed = function () {
+Controller.prototype.showLettersUsed = function() {
     let id = document.getElementById("letters-used");
-    if (id) id.textContent = "letters";
+    var lettersUsed = this.gameObj.getLettersUsed();
+    if (id) id.textContent = lettersUsed;
 }
 
 Controller.prototype.showWordToGuess = function () {
     let id = document.getElementById("word-to-guess");
-    if (id) id.textContent = "_ _ _ _ _ a";
+    if (id) id.textContent = this.gameObj.currentGuess;
 }
 
 Controller.prototype.drawStopSegment = function(n) {
@@ -52,7 +75,6 @@ Controller.prototype.drawStopSegment = function(n) {
         let id = document.getElementById(idName);
         if (id) id.setAttribute("style", "color: red");
     }
-    return n;
 }
 
 Controller.prototype.resetStopSegment = function(n) {
@@ -61,7 +83,6 @@ Controller.prototype.resetStopSegment = function(n) {
         let id = document.getElementById(idName);
         if (id) id.setAttribute("style", "color: gray");
     }
-    return n;
 }
 
 Controller.prototype.resetStopSign = function() {
@@ -69,25 +90,38 @@ Controller.prototype.resetStopSign = function() {
         this.resetStopSegment(i);
     }
     let id = document.getElementById("stop-text");
-    if (id) id.setAttribute("style", "color: gray");
+    if (id) id.setAttribute("style", "color: white");
 }
 
 Controller.prototype.drawNextStopSegment = function() {
-    if (this.nextSegment <= this.MAX_SEGMENTS) {
-        this.drawStopSegment(this.nextSegment++);
-    }
+    // TODO: Open issue for this.
+    //
+    // The bit of guard logic you see addresses an issue
+    // with the stop sign getting updated after one round
+    // has finished but before the next has started.
+    //
+    // Wondering if there is subtle data buffering issue
+    // with my keyboard handler.  It /seems/ like the last
+    // guessed letter from the previous round is still in 
+    // the input buffer and sometimes bleeds into the next
+    // round.
+    if (this.gameObj.getPlayState() == "playing") {
+        if (this.nextSegment <= this.MAX_SEGMENTS) {
+            this.drawStopSegment(this.nextSegment++);
+        }
 
-    if (this.nextSegment > this.MAX_SEGMENTS) {
-        this.allSegmentsDrawn = true;
-        let id = document.getElementById("stop-text");
-        if (id) id.setAttribute("style", "color: white; background-color: red");
+        if (this.nextSegment > this.MAX_SEGMENTS) {
+            this.allSegmentsDrawn = true;
+            let id = document.getElementById("stop-text");
+            if (id) id.setAttribute("style", "color: white; background-color: red");
+        }
     }
 }
 
 Controller.prototype.addMenuEventListeners = function() {
     
-    let playId = document.getElementById("play-button");
-    playId.addEventListener('click', this.getPlayMenuEventCallback(), false);
+    // let hintId = document.getElementById("navbar-btn");
+    // hintId.addEventListener('click', this.getHintMenuEventCallback(), false);
 
     let statsId = document.getElementById("stats-link");
     statsId.addEventListener('click', this.getStatsMenuEventCallback(),false);
@@ -100,7 +134,7 @@ Controller.prototype.addMenuEventListeners = function() {
 // Otherwise 'this' will be bound to the triggering html navbar element
 // and not the controller object as needed.
 
-Controller.prototype.getPlayMenuEventCallback = function() {
+Controller.prototype.getHintMenuEventCallback = function() {
     let that = this;
     function menuCallback(e) {
         that.reset();
@@ -136,6 +170,14 @@ Controller.prototype.addKeyboardEventListener = function() {
     id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
 }
 
+// Doesn't seem to work...thinking it could be the closure.
+// in removeEventListener.
+//
+// Controller.prototype.removeKeyboardEventListener = function() {
+//     let id = document.getElementById("guessed-letter-input");
+//     id.removeEventListener('keyup', this.getKeyboardEventCallback());
+// }
+
 Controller.prototype.getKeyboardEventCallback = function() {
     let that = this;
     function keyboardCallback(e) {
@@ -150,15 +192,34 @@ Controller.prototype.getKeyboardEventCallback = function() {
 
 Controller.prototype.takeTurn = function(userGuess) {
     this.guessedLetter = userGuess;
-    // add guessed letter to the game model
-    this.gameObj.addLetterUsed(this.guessedLetter);
+    let goodGuess = this.gameObj.takeTurn(userGuess);
+    this.showWordToGuess();
     this.showLettersUsed();
-}
-
-Controller.prototype.showLettersUsed = function() {
-    let id = document.getElementById("letters-used");
-    var lettersUsed = this.gameObj.getLettersUsed();
-    if (id && lettersUsed) id.textContent = lettersUsed;
+    this.showGuessesLeft();
+    if (!goodGuess) {
+        this.drawNextStopSegment();
+    }
+    let statusText = "";
+    switch (this.gameObj.getPlayState()) {
+        case "won": 
+            statusText = "You won! :-)"
+            // TODO: Fix race condition here.  Alert box pops up before
+            // status text has been written to the DOM :-/
+            this.showStatusText(statusText);
+            statusText += "\n\nYou guessed: " + this.gameObj.currentWord;
+            alert(statusText);
+            this.reset();
+            break;
+        case "lost":
+            statusText = "You lost.  Better luck next time."
+            // TODO: Fix race condition here.  Alert box pops up before
+            // status text has been written to the DOM :-/
+            this.showStatusText(statusText);
+            statusText += "\n\nThe word was: " + this.gameObj.currentWord;
+            alert(statusText);
+            this.reset();
+            break;
+    }
 }
 
 Controller.prototype.resetGuessedLetterForm = function() {
@@ -171,17 +232,9 @@ Controller.prototype.setFocus = function() {
     id.focus();
 }
 
-Controller.prototype.reset = function() {
-    this.nextSegment = 1;
-    this.allSegmentsDrawn = false;
-    this.resetStopSign();
-    this.showGameName();
-    this.setFocus();
-    this.resetGuessedLetterForm();
-}
-
-Controller.prototype.play = function() {
-    this.init()
+Controller.prototype.showStatusText = function(text) {
+    let id = document.getElementById("status-text");
+    id.textContent = text;
 }
 
 function UnitTestController() {
