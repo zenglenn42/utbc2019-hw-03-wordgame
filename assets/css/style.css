@@ -65,6 +65,11 @@ a.navbar-link {
     margin: 0 auto;
   }
 
+  a#navbar-btn {
+    /* Hiding optional 'Hint' button. */
+    display: none;
+  }
+
   p.navbar-text.navbar-right {
     background-color: white;
     border-bottom-width: 1px;

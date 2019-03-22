@@ -120,8 +120,8 @@ Controller.prototype.drawNextStopSegment = function() {
 
 Controller.prototype.addMenuEventListeners = function() {
     
-    let playId = document.getElementById("play-button");
-    playId.addEventListener('click', this.getPlayMenuEventCallback(), false);
+    // let hintId = document.getElementById("navbar-btn");
+    // hintId.addEventListener('click', this.getHintMenuEventCallback(), false);
 
     let statsId = document.getElementById("stats-link");
     statsId.addEventListener('click', this.getStatsMenuEventCallback(),false);
@@ -134,7 +134,7 @@ Controller.prototype.addMenuEventListeners = function() {
 // Otherwise 'this' will be bound to the triggering html navbar element
 // and not the controller object as needed.
 
-Controller.prototype.getPlayMenuEventCallback = function() {
+Controller.prototype.getHintMenuEventCallback = function() {
     let that = this;
     function menuCallback(e) {
         that.reset();
