@@ -61,4 +61,8 @@ Optional design ideas:
 ![alt tag](docs/img/ws-optional-player-levels.jpg)
 ![alt tag](docs/img/ws-optional-light.jpg)
 
+## Here's what the MVP (minimal viable product) is looking like:
+
+![alt tag](docs/img/ws-unstyled-opening.png)
+![alt tag](docs/img/ws-unstyled-playing.png)
 
