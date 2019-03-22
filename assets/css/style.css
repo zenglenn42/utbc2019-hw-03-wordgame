@@ -116,6 +116,10 @@ main p#main-content {
   font-size: 0.9em;
 }
 
+main #stop-text {
+  color: white;
+}
+
 footer {
   background-color: #555;
   border-top-style: solid;

@@ -37,6 +37,7 @@ Controller.prototype.reset = function() {
         this.showGuessesLeft();
         this.showWordToGuess();
         this.showLettersUsed();
+        this.setStatusText("Pick a letter!");
     } // else all the words were played.  TODO: Handle more gracefully.
 }
 
@@ -83,7 +84,7 @@ Controller.prototype.resetStopSign = function() {
         this.resetStopSegment(i);
     }
     let id = document.getElementById("stop-text");
-    if (id) id.setAttribute("style", "color: gray");
+    if (id) id.setAttribute("style", "color: white");
 }
 
 Controller.prototype.drawNextStopSegment = function() {
@@ -96,6 +97,10 @@ Controller.prototype.drawNextStopSegment = function() {
         let id = document.getElementById("stop-text");
         if (id) id.setAttribute("style", "color: white; background-color: red");
     }
+}
+
+Controller.prototype.play = function() {
+    this.init()
 }
 
 Controller.prototype.addMenuEventListeners = function() {
@@ -167,14 +172,6 @@ Controller.prototype.getKeyboardEventCallback = function() {
     return keyboardCallback;
 }
 
-Controller.prototype.showWinner = function() {
-    alert("You won");
-}
-
-Controller.prototype.showLoser = function() {
-    alert("You lost");
-}
-
 Controller.prototype.takeTurn = function(userGuess) {
     this.guessedLetter = userGuess;
     let goodGuess = this.gameObj.takeTurn(userGuess);
@@ -186,19 +183,11 @@ Controller.prototype.takeTurn = function(userGuess) {
     }
     switch (this.gameObj.getPlayState()) {
         case "won": 
-            // this.showWinner();
-
-            // Hacky fix for strange race condition where by alert pops
-            // up before the DOM has updated with completed word the
-            // user just guessed.  Otherwise last letter
-            // will be truncated.
-
-            var timeout = setTimeout(this.showWinner, 250);
+            this.setStatusText("You won! :-)");
             this.reset();
             break;
         case "lost":
-            // this.showLoser
-            var timeout = setTimeout(this.showLoser, 250);
+            this.setStatusText("You lost. Better luck next time.");
             this.reset();
             break;
     }
@@ -214,8 +203,9 @@ Controller.prototype.setFocus = function() {
     id.focus();
 }
 
-Controller.prototype.play = function() {
-    this.init()
+Controller.prototype.setStatusText = function(text) {
+    let id = document.getElementById("status-text");
+    id.textContent = text;
 }
 
 function UnitTestController() {
