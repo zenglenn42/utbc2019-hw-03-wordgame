@@ -57,7 +57,12 @@ WordStop.prototype.badGuessesLeft = 8;
 WordStop.prototype.currentGuess = "";
 WordStop.prototype.currentWord = "";
 WordStop.prototype.lettersUsed = [];
-WordStop.prototype.helpText = "Lorem ipsum dolor sit amet.  Help, I don't know Latin!";
+WordStop.prototype.helpText = "\
+Welcome to WordStop!\n\n\
+This is a variation on the game of 'hangman' except the gallows has been \
+replaced by the outline of a Stop sign. \n\n\
+You get 8 wrong guesses at letters in the word before the game is over.\
+";
 WordStop.prototype.lexicon = new Lexicon();
 WordStop.prototype.playState = "playing"; // "playing" | "won" | "lost"
 
