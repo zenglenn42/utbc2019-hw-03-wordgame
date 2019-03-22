@@ -58,6 +58,8 @@ WordStop.prototype.currentGuess = "";
 WordStop.prototype.currentWord = "";
 WordStop.prototype.lettersUsed = [];
 WordStop.prototype.helpText = "Lorem ipsum dolor sit amet.  Help, I don't know Latin!";
+WordStop.prototype.lexicon = new Lexicon();
+WordStop.prototype.playState = "playing"; // "playing" | "won" | "lost"
 
 WordStop.prototype.getLettersUsed = function() {
     var letterStr = this.lettersUsed.join("");
@@ -72,10 +74,63 @@ WordStop.prototype.addLetterUsed = function(letter) {
 }
 
 WordStop.prototype.reset = function() {
+    this.playState = "playing";
     this.badGuessesLeft = 8;
-    this.currentGuess = "";
-    this.currentWord = ""
     this.lettersUsed = [];
+    this.currentGuess = "";
+    this.currentWord = this.lexicon.getWord();
+    if (this.currentWord) {
+        for (let i = 0; i <  this.currentWord.length; i++) {
+            this.currentGuess += "-";
+        }
+        return true;
+    } else {
+        console.log("You've used up all my words.");
+        return false;
+    }
+}
+
+WordStop.prototype.getGuessesLeft = function() {
+    return this.badGuessesLeft;
+}
+
+WordStop.prototype.takeTurn = function(ch) {
+    if (this.lettersUsed.includes(ch))
+        // user tried same bad letter multiple times
+        return true;
+
+    if (!this.currentWord) {
+        // defensive programming when all words in lexicon
+        // have been played
+        return false;
+    }
+
+    this.addLetterUsed(ch);
+    if (this.currentWord.indexOf(ch) === -1) {
+        if (this.badGuessesLeft > 0) {
+            this.badGuessesLeft--;
+        }
+        if (this.badGuessesLeft == 0) {
+            this.playState = "lost";
+        }
+        return false; // incorrectly guessed letter
+    } else {
+        let index = 0;
+        while ( (index = this.currentWord.indexOf(ch, index)) !== -1) {
+            var currentGuessArray = this.currentGuess.split("");
+            currentGuessArray[index] = this.currentWord[index];
+            this.currentGuess = currentGuessArray.join("");
+            index++;
+        }
+        if (this.currentGuess == this.currentWord) {
+            this.playState = "won"
+        }
+        return true;  // correct guessed letter
+    }
+}
+
+WordStop.prototype.getPlayState = function() {
+    return this.playState;
 }
 
 //
@@ -88,7 +143,18 @@ Lexicon.prototype.wordsUsed = [];
 
 Lexicon.prototype.getWord = function() {
     var rindex = Math.floor(Math.random() * (this.words.length));
-    return this.words[rindex];
+    this.wordsUsed.push(this.words[rindex]);
+    var word = this.words[rindex];
+    this.removeWord(rindex);
+    return word;
+}
+
+Lexicon.prototype.removeWord = function(atIndex) {
+    if (atIndex < this.words.length) {
+        this.words.splice(atIndex, 1);  // Remove word so we don't reuse it.
+    } else {
+        console.log("Lexicon.removeWord() ran out of words.");
+    }
 }
 
 Lexicon.prototype.getLengthWord = function(n) { return "nlengthword"}

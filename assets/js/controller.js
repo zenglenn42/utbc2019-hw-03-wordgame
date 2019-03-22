@@ -15,14 +15,28 @@ Controller.prototype.guessedLetter = "";
 Controller.prototype.init = function() {
     // instantiate model
     this.gameObj = new WordStop();
-    this.gameObj.reset();
 
     // reset controller
     this.reset();
-    
+
     // register input listeners
     this.addMenuEventListeners();
-    this.addKeyboardEventListener();
+}
+
+Controller.prototype.reset = function() {
+    this.nextSegment = 1;
+    this.allSegmentsDrawn = false;
+    this.resetStopSign();
+    this.showGameName();
+    this.setFocus();
+    this.resetGuessedLetterForm();
+    // Fetch a new word and reset game state.
+    if (this.gameObj.reset()) {
+        console.log("Controller.reset() new word = ", this.gameObj.currentWord);
+        this.addKeyboardEventListener();
+        this.showGuessesLeft();
+        this.showWordToGuess();
+    } // else all the words were played.  TODO: Handle more gracefully.
 }
 
 Controller.prototype.showGameName = function() {
@@ -33,17 +47,17 @@ Controller.prototype.showGameName = function() {
 
 Controller.prototype.showGuessesLeft = function () {
     let id = document.getElementById("guesses-left");
-    if (id) id.textContent = "guesses";
+    if (id) id.textContent = this.gameObj.getGuessesLeft();
 }
 
 Controller.prototype.showLettersUsed = function () {
     let id = document.getElementById("letters-used");
-    if (id) id.textContent = "letters";
+    if (id) id.textContent = this.gameObj.lettersUsed;
 }
 
 Controller.prototype.showWordToGuess = function () {
     let id = document.getElementById("word-to-guess");
-    if (id) id.textContent = "_ _ _ _ _ a";
+    if (id) id.textContent = this.gameObj.currentGuess;
 }
 
 Controller.prototype.drawStopSegment = function(n) {
@@ -136,6 +150,11 @@ Controller.prototype.addKeyboardEventListener = function() {
     id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
 }
 
+// Controller.prototype.removeKeyboardEventListener = function() {
+//     let id = document.getElementById("guessed-letter-input");
+//     id.removeEventListener('keyup', this);
+// }
+
 Controller.prototype.getKeyboardEventCallback = function() {
     let that = this;
     function keyboardCallback(e) {
@@ -148,11 +167,42 @@ Controller.prototype.getKeyboardEventCallback = function() {
     return keyboardCallback;
 }
 
+Controller.prototype.showWinner = function() {
+    alert("You won");
+}
+
+Controller.prototype.showLoser = function() {
+    alert("You lost");
+}
+
 Controller.prototype.takeTurn = function(userGuess) {
     this.guessedLetter = userGuess;
+    let goodGuess = this.gameObj.takeTurn(userGuess);
     // add guessed letter to the game model
-    this.gameObj.addLetterUsed(this.guessedLetter);
+    this.showWordToGuess();
     this.showLettersUsed();
+    this.showGuessesLeft();
+    if (!goodGuess) {
+        this.drawNextStopSegment();
+    }
+    switch (this.gameObj.getPlayState()) {
+        case "won": 
+            this.gameObj.incWins();
+            // this.showWinner();
+            var timeout = setTimeout(this.showWinner, 250);
+            this.reset();
+            break;
+        case "lost":
+            this.gameObj.incLosses();
+            // Hacky fix for strange race condition where by alert pops
+            // up before the DOM has updated with 0 guesses left. :-/
+            // Otherwise display will say 1 guess is still left (which is a lie).
+
+            // this.showLoser
+            var timeout = setTimeout(this.showLoser, 250);
+            this.reset();
+            break;
+    }
 }
 
 Controller.prototype.showLettersUsed = function() {
@@ -169,15 +219,6 @@ Controller.prototype.resetGuessedLetterForm = function() {
 Controller.prototype.setFocus = function() {
     let id = document.getElementById("guessed-letter-input");
     id.focus();
-}
-
-Controller.prototype.reset = function() {
-    this.nextSegment = 1;
-    this.allSegmentsDrawn = false;
-    this.resetStopSign();
-    this.showGameName();
-    this.setFocus();
-    this.resetGuessedLetterForm();
 }
 
 Controller.prototype.play = function() {
