@@ -13,6 +13,9 @@
 		[x] annunciators
 		[x] segmented stop sign
 		[x] html
+[x] wire up controller to model
+[x] wire up controller to view
+[x] refactor to single page of html
 
 [ ] controller object design
 	[ ] data
@@ -23,18 +26,16 @@
 			[ ] event handler callback
 	[ ] test drivers
 
-[ ] wire up controller to model
-[ ] wire up controller to view
 
 [ ] ui/view implementation
-	[ ] stats ui
-		[ ] styling
+	[x] stats pulled from game model
+	[x] stats displayed in alert box
 	[ ] play ui
 		[ ] keyboard input
 		[ ] styling
-	[ ] help ui
-		[ ] html
-		[ ] styling
+	[x] help text in game model
+	[x] help text displayed in alert box
+	[ ] final help text inserted
 [ ] function test
 [ ] styling refinement
 [ ] nice-to-haves

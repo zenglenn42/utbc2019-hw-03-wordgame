@@ -15,27 +15,13 @@ Controller.prototype.init = function() {
     this.gameObj = new WordStop();
     this.gameObj.reset();
     this.reset();
+    this.addMenuEventListeners();
 }
 
 Controller.prototype.showGameName = function() {
     var gameName = this.gameObj.getName()
     let id = document.getElementById("game-name");
     if (id) id.textContent = gameName;
-}
-
-Controller.prototype.showWins = function() {
-    let id = document.getElementById("wins");
-    if (id) id.textContent = "wins";
-}
-
-Controller.prototype.showLosses = function() {
-    let id = document.getElementById("losses");
-    if (id) id.textContent = "loses";
-}
-
-Controller.prototype.showLevel = function() {
-    let id = document.getElementById("level");
-    if (id) id.textContent = "level";
 }
 
 Controller.prototype.showGuessesLeft = function () {
@@ -91,6 +77,36 @@ Controller.prototype.drawNextStopSegment = function() {
     }
 }
 
+Controller.prototype.addMenuEventListeners = function() {
+    let statsId = document.getElementById("stats-link");
+    // Need closure to fetch callback else 'this' will
+    // be bound to the html element and not the controller object
+    // as desired.
+    statsId.addEventListener('click', this.getStatsMenuEventCallback(),false);
+    let helpId = document.getElementById("help-link");
+    helpId.addEventListener('click', this.getHelpMenuEventCallback(), false);
+}
+
+Controller.prototype.getStatsMenuEventCallback = function() {
+    let that = this;
+    function menuCallback(e) {
+        let winStr = `Wins: ${that.gameObj.wins}`;
+        let lossesStr = `Losses: ${that.gameObj.losses}`;
+        let alertStr = `Game Stats\n${winStr}\n${lossesStr}`;
+        alert(alertStr);
+    }
+    return menuCallback;
+}
+
+Controller.prototype.getHelpMenuEventCallback = function() {
+    let that = this;
+    function menuCallback(e) {
+        let helpStr = that.gameObj.helpText;
+        alert(helpStr);
+    }
+    return menuCallback;
+}
+
 Controller.prototype.reset = function() {
     this.nextSegment = 1;
     this.allSegmentsDrawn = false;
@@ -102,10 +118,8 @@ function UnitTestController() {
     var cntlr = new Controller();
     cntlr.init();
     console.log(cntlr.gameObj.getName());
+    cntlr.gameObj.wins = 3;
     cntlr.showGameName();
-    cntlr.showWins();
-    cntlr.showLosses();
-    cntlr.showLevel();
     cntlr.showGuessesLeft();
     cntlr.showLettersUsed();
     cntlr.showWordToGuess();
