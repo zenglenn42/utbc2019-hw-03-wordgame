@@ -10,12 +10,19 @@ Controller.prototype.MAX_SEGMENTS = 8;
 Controller.prototype.nextSegment = 1;
 Controller.prototype.allSegmentsDrawn = false;
 Controller.prototype.gameObj = null
+Controller.prototype.guessedLetter = "";
 
 Controller.prototype.init = function() {
+    // instantiate model
     this.gameObj = new WordStop();
     this.gameObj.reset();
+
+    // reset controller
     this.reset();
+    
+    // register input listeners
     this.addMenuEventListeners();
+    this.addKeyboardEventListener();
 }
 
 Controller.prototype.showGameName = function() {
@@ -78,13 +85,28 @@ Controller.prototype.drawNextStopSegment = function() {
 }
 
 Controller.prototype.addMenuEventListeners = function() {
+    
+    let playId = document.getElementById("play-button");
+    playId.addEventListener('click', this.getPlayMenuEventCallback(), false);
+
     let statsId = document.getElementById("stats-link");
-    // Need closure to fetch callback else 'this' will
-    // be bound to the html element and not the controller object
-    // as desired.
     statsId.addEventListener('click', this.getStatsMenuEventCallback(),false);
+
     let helpId = document.getElementById("help-link");
     helpId.addEventListener('click', this.getHelpMenuEventCallback(), false);
+}
+
+// Use closures to sequester 'this' properly for navbar menu item callbacks.
+// Otherwise 'this' will be bound to the triggering html navbar element
+// and not the controller object as needed.
+
+Controller.prototype.getPlayMenuEventCallback = function() {
+    let that = this;
+    function menuCallback(e) {
+        that.reset();
+        that.setFocus();
+    }
+    return menuCallback;
 }
 
 Controller.prototype.getStatsMenuEventCallback = function() {
@@ -94,6 +116,7 @@ Controller.prototype.getStatsMenuEventCallback = function() {
         let lossesStr = `Losses: ${that.gameObj.losses}`;
         let alertStr = `Game Stats\n${winStr}\n${lossesStr}`;
         alert(alertStr);
+        that.setFocus();
     }
     return menuCallback;
 }
@@ -103,8 +126,49 @@ Controller.prototype.getHelpMenuEventCallback = function() {
     function menuCallback(e) {
         let helpStr = that.gameObj.helpText;
         alert(helpStr);
+        that.setFocus();
     }
     return menuCallback;
+}
+
+Controller.prototype.addKeyboardEventListener = function() {
+    let id = document.getElementById("guessed-letter-input");
+    id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
+}
+
+Controller.prototype.getKeyboardEventCallback = function() {
+    let that = this;
+    function keyboardCallback(e) {
+        if (e.keyCode >= 65 && e.keyCode <= 90) {
+            // console.log(e);
+            that.takeTurn(e.key.toLowerCase());
+        }
+        that.resetGuessedLetterForm();
+    }
+    return keyboardCallback;
+}
+
+Controller.prototype.takeTurn = function(userGuess) {
+    this.guessedLetter = userGuess;
+    // add guessed letter to the game model
+    this.gameObj.addLetterUsed(this.guessedLetter);
+    this.showLettersUsed();
+}
+
+Controller.prototype.showLettersUsed = function() {
+    let id = document.getElementById("letters-used");
+    var lettersUsed = this.gameObj.getLettersUsed();
+    if (id && lettersUsed) id.textContent = lettersUsed;
+}
+
+Controller.prototype.resetGuessedLetterForm = function() {
+    let id = document.getElementById("guessed-letter-form");
+    id.reset();
+}
+
+Controller.prototype.setFocus = function() {
+    let id = document.getElementById("guessed-letter-input");
+    id.focus();
 }
 
 Controller.prototype.reset = function() {
@@ -112,6 +176,12 @@ Controller.prototype.reset = function() {
     this.allSegmentsDrawn = false;
     this.resetStopSign();
     this.showGameName();
+    this.setFocus();
+    this.resetGuessedLetterForm();
+}
+
+Controller.prototype.play = function() {
+    this.init()
 }
 
 function UnitTestController() {
@@ -127,5 +197,6 @@ function UnitTestController() {
     for (let i = 1; i <= cntlr.MAX_SEGMENTS; i++) {
         cntlr.drawNextStopSegment();
     }
+
     // cntlr.reset();
 }

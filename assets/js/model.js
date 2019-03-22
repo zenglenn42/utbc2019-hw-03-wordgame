@@ -65,7 +65,10 @@ WordStop.prototype.getLettersUsed = function() {
 }
 
 WordStop.prototype.addLetterUsed = function(letter) {
-    this.lettersUsed.push(letter);
+    // Create a set of letters guessed already.
+    if (!this.lettersUsed.includes(letter)) {
+        this.lettersUsed.push(letter);
+    }
 }
 
 WordStop.prototype.reset = function() {

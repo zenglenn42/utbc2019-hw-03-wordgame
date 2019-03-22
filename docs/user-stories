@@ -22,8 +22,8 @@
 	[ ] methods
 		[ ] game loop logic pseudo code
 		[ ] game loop logic
-		[ ] user input 
-			[ ] event handler callback
+		[x] user input 
+			[x] event handler callback
 	[ ] test drivers
 
 
