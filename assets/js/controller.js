@@ -66,7 +66,6 @@ Controller.prototype.drawStopSegment = function(n) {
         let id = document.getElementById(idName);
         if (id) id.setAttribute("style", "color: red");
     }
-    return n;
 }
 
 Controller.prototype.resetStopSegment = function(n) {
@@ -75,7 +74,6 @@ Controller.prototype.resetStopSegment = function(n) {
         let id = document.getElementById(idName);
         if (id) id.setAttribute("style", "color: gray");
     }
-    return n;
 }
 
 Controller.prototype.resetStopSign = function() {
