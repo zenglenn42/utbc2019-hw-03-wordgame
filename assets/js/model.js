@@ -135,32 +135,6 @@ WordStop.prototype.getPlayState = function() {
     return this.playState;
 }
 
-//
-// Define object model for the lexicon.
-//
-
-function Lexicon() { }
-Lexicon.prototype.words = ["random", "words", "yay"];
-Lexicon.prototype.wordsUsed = [];
-
-Lexicon.prototype.getWord = function() {
-    var rindex = Math.floor(Math.random() * (this.words.length));
-    this.wordsUsed.push(this.words[rindex]);
-    var word = this.words[rindex];
-    this.removeWord(rindex);
-    return word;
-}
-
-Lexicon.prototype.removeWord = function(atIndex) {
-    if (atIndex < this.words.length) {
-        this.words.splice(atIndex, 1);  // Remove word so we don't reuse it.
-    } else {
-        console.log("Lexicon.removeWord() ran out of words.");
-    }
-}
-
-Lexicon.prototype.getLengthWord = function(n) { return "nlengthword"}
-
 function UnitTestWordStopModel() {
     var ws = new WordStop();
     console.log(ws.getName());
@@ -182,5 +156,4 @@ function UnitTestWordStopModel() {
     console.log("lex word: ", lex.getWord());
     console.log("lex word: ", lex.getWord());
     console.log("lex word: ", lex.getWord());
-    console.log("lex n-length word: ", lex.getLengthWord(3));
 }
