@@ -1,31 +1,57 @@
 # utbc2019-hw-03-wordgame
 
-Here's what the final MVP (minimal viable product) game looks like:
+This week I'm implementing my variation on the game of hangman.
+
+## Release 1.0 (MVP)
+Here's what the final minimal viable product looks like:
 
 ![alt tag](docs/img/ws-unstyled-hint.png)
 
 The octogon lights up with red segments as the user (incorrectly) guesses letters for a word from a basic lexicon of 850 words.
-[This](https://simple.wikipedia.org/wiki/Wikipedia:Basic_English_ordered_wordlist) is the source of the words.
 
 Game play is pretty tame ...
 
-![alt tag](docs/img/ws-unstyled-opening.png)
 ![alt tag](docs/img/ws-unstyled-playing.png)
+
+You can ask for help:
+
+![alt tag](docs/img/ws-help.png)
+
+and get a hint:
+
+![alt tag](docs/img/ws-hint.png)
+
+Winning and losing look like this:
+
+![alt tag](docs/img/ws-winning.png)
+![alt tag](docs/img/ws-losing.png)
+
+You can also check your game stats:
+
+![alt tag](docs/img/ws-stats.png)
 
 ## Implementation Features
 
 * [MVC](https://medium.freecodecamp.org/model-view-controller-mvc-explained-through-ordering-drinks-at-the-bar-efcba6255053) based (see [assets/js/model.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/model.js) & [assets/js/controller.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/controller.js))
 * [Closures](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/controller.js#L125) are used in the controller to return event handlers that set 'this' to my objects
-* In the model, I use [inheritance](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/model.js#L53) to subclass the WordStop game off a Game superclass
-* Game is responsive.
+* In the model, I use [inheritance](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/model.js#L53) to subclass the WordStop game off a Game superclass.
 
-In theory, it would be easy enough to subclass off the WordStop game to create something that only served up palindromes, for example.
-Even the name of the game and [help text](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/ad02a309a5ff547a1d9a35de1a360b889b817f9b/assets/js/model.js#L60) are in the model.
+In theory, it would be easy enough to subclass off the WordStop game to create something that only served up palindromes, for example.  Even the name of the game and [help text](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/ad02a309a5ff547a1d9a35de1a360b889b817f9b/assets/js/model.js#L60) are in the model.
+
+* The implementation is responsive to different sized viewports.
+* The [lexicon](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/cbd273864c0a01aa345b1f7fcdd9163810c17411/assets/js/lexicon.js#L1) was created by post-processing a basic list of English words from [here](https://simple.wikipedia.org/wiki/Wikipedia:Basic_English_ordered_wordlist).
+* In the html, I used a dedicated <input> text control so on mobile devices, the keyboard would pop-up:
+![alt tag](docs/img/ws-mobile-keybd.png)
 
 The two most interesting implementation blockers that really made me think were:
 
 * [DOM rendering is not synchronous](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/commit/181018e129ad4d3e46fe6bbcd95d3bb2f561005e)
 * [Sharing js-runtime state across multiple html pages takes some thought :-)](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/pull/8)
+
+## Future Enhancements
+
+* The design would benefit from some styling.  Replace the stop sign segments with a stop sign image outlined by a CSS polygon to mark progress.
+* Themes could be added that affect the look and feel (backgrounds, fonts, colors, sounds) and include thematic lexicons.  The theme could be owned by the WordStop object and made selectable at runtime through a drop-down menu off the navbar.
 
 ## Designer's Log
 
