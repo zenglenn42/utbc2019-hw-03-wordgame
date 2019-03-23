@@ -20,7 +20,7 @@ Game play is pretty tame ...
 * Game is responsive.
 
 In theory, it would be easy enough to subclass off the WordStop game to create something that only served up palindromes, for example.
-Even the name of the game and help text are in the model.
+Even the name of the game and [help text](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/ad02a309a5ff547a1d9a35de1a360b889b817f9b/assets/js/model.js#L60) are in the model.
 
 The two most interesting implementation blockers that really made me think were:
 
