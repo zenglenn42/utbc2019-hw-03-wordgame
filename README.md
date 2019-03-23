@@ -19,7 +19,7 @@ but the implementation has some notable features:
 * In the model, I use inheritance to subclass the WordStop game off a Game superclass
 
 In theory, it would be easy enough to subclass off the WordStop game to create something that only served up palindromes, for example.
-Even the name of the game itself is in the model.
+Even the name of the game and help text are in the model.
 
 ## Designer's Log
 
