@@ -3,6 +3,7 @@
 This week I'm implementing my variation on the game of hangman.
 
 ## Release 1.0 (MVP)
+
 Here's what the final minimal viable product looks like:
 
 ![alt tag](docs/img/ws-unstyled-hint.png)
@@ -13,22 +14,12 @@ Game play is pretty tame ...
 
 ![alt tag](docs/img/ws-unstyled-playing.png)
 
-You can ask for help:
-
-![alt tag](docs/img/ws-help.png)
-
-and get a hint:
-
-![alt tag](docs/img/ws-hint.png)
-
 Winning and losing look like this:
 
 ![alt tag](docs/img/ws-winning.png)
+
 ![alt tag](docs/img/ws-losing.png)
 
-You can also check your game stats:
-
-![alt tag](docs/img/ws-stats.png)
 
 ## Implementation Features
 
