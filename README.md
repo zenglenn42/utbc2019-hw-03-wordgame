@@ -21,6 +21,11 @@ Game play is pretty tame ...
 In theory, it would be easy enough to subclass off the WordStop game to create something that only served up palindromes, for example.
 Even the name of the game and help text are in the model.
 
+The two most interesting implementation blockers that really made me think were:
+
+* [DOM rendering is not synchronous](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/commit/181018e129ad4d3e46fe6bbcd95d3bb2f561005e)
+* [Sharing js-runtime state across multiple html pages takes some thought :-)](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/pull/8)
+
 ## Designer's Log
 
 This week I'm riff'ing on the game of Hangman.  
