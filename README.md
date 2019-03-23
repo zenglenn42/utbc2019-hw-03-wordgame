@@ -1,5 +1,9 @@
 # utbc2019-hw-03-wordgame
 
+## Here's what the final MVP (minimal viable product) game looks like:
+
+![alt tag](docs/img/ws-unstyled-hint.png)
+
 ## Designer's Log
 
 There's a disturbance in the force, a problem to solve, a set of design constraints
