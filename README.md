@@ -14,7 +14,7 @@ Game play is pretty tame ...
 
 but the implementation has some notable features:
 
-* MVC based (see assets/js/model.js & assets/js/controller.js)
+* MVC based (see [assets/js/model.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/model.js) & [assets/js/controller.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/controller.js)
 * Closures are used in the controller to return event handlers that set this to my objects
 * In the model, I use inheritance to subclass the WordStop game off a Game superclass
 
