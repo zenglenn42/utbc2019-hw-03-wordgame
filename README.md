@@ -40,8 +40,7 @@ In theory, it would be easy enough to subclass off the WordStop game to create s
 
 * The implementation is responsive to different sized viewports.
 * The [lexicon](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/cbd273864c0a01aa345b1f7fcdd9163810c17411/assets/js/lexicon.js#L1) was created by post-processing a basic list of English words from [here](https://simple.wikipedia.org/wiki/Wikipedia:Basic_English_ordered_wordlist).
-* In the html, I used a dedicated <input> text control so on mobile devices, the keyboard would pop-up:
-![alt tag](docs/img/ws-mobile-keybd.png)
+* In the html, I used a dedicated <input> text control so on mobile devices, the keyboard would pop-up.
 
 The two most interesting implementation blockers that really made me think were:
 
