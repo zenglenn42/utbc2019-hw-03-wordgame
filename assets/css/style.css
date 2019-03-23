@@ -33,11 +33,6 @@ a.navbar-brand {
   padding: 0.7em 1em;
 }
 
-a#navbar-btn {
-  /* Hiding optional 'Hint' button. */
-  visibility: hidden;
-}
-
 a.navbar-link {
   color: gray;
   font-size: 0.9em;
@@ -63,11 +58,6 @@ a.navbar-link {
   a.navbar-brand {
     display: block;
     margin: 0 auto;
-  }
-
-  a#navbar-btn {
-    /* Hiding optional 'Hint' button. */
-    display: none;
   }
 
   p.navbar-text.navbar-right {
