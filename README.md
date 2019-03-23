@@ -25,7 +25,7 @@ Even the name of the game itself is in the model.
 
 This week I'm riff'ing on the game of Hangman.  
 
-But what would be an interesting alternative to the classic game would that still meets the requirements while being less grim?
+But what would be an interesting alternative to the classic game that would that still meets the requirements while being less grim?
 
 There's sunshine this morning and a brisk walk to my favorite breakfast taco joint gives
 me time to think.  You get 6 wrong guesses in hangman, with the complete figure representing a stopping point.
