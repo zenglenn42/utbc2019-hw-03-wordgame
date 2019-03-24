@@ -203,6 +203,7 @@ Controller.prototype.takeTurn = function(userGuess) {
             this.syncShowLoser(statusText);
             break;
     }
+    this.setFocus();
 }
 
 Controller.prototype.syncShowWinner = function(str) {
@@ -216,7 +217,20 @@ Controller.prototype.syncShowWinner = function(str) {
 Controller.prototype.getResetCallback = function() {
     var that = this;
     function callback() {
-        that.reset();
+
+        // NB: I'm seeing conditions in test whereby keyboard
+        // events seem to get buffered up between rounds of
+        // play causing multiple calls to reset, resulting in
+        // multiple new words to guess in rapdid succession.
+        // Here we enforce a single call to reset on win/loss 
+        // boundaries.
+        //
+        // TODO: Research ways to empty the event queue at the
+        //       end of a game to avoid possible spill-over events.
+
+        if (that.gameObj.playState == "won" || that.gameObj.playState == "lost") {
+            that.reset();
+        }
     }
     return callback;
 }
