@@ -72,8 +72,18 @@ a.navbar-link {
 }
 
 main {
-  background-color: #ddd;
+  background: url("../img/skyline.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: #ddd; /* fallback */
   flex: 1;
+}
+
+@media screen and (max-width: 640px) {
+  main {
+    background-size: auto;
+  }
 }
 
 main div#main-container {
