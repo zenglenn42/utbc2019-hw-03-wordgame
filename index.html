@@ -44,7 +44,8 @@
     <main>
       <div class="container" id="main-container">
         <p class="row" id="main-label">
-          Guess the word: <span id="word-to-guess"></span>
+          <span id="word-to-guess-prompt">Guess the word: </span
+          ><span id="word-to-guess"></span>
         </p>
         <form class="guessed-letter-form" id="guessed-letter-form">
           <!-- <label for="guessed-letter-input">Pick a letter ...</label> -->
@@ -81,10 +82,7 @@
           &nbsp;&nbsp;&nbsp;<span id="stop-seg-1">--</span
           >&nbsp;&nbsp;&nbsp;<br />
         </div>
-        <div
-          id="status-text"
-          style="text-align: center; background-color: teal; color: white"
-        >
+        <div id="status-text">
           Pick a letter!
         </div>
       </div>
