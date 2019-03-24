@@ -67,7 +67,7 @@ WordStop.prototype.lexicon = new Lexicon();
 WordStop.prototype.playState = "playing"; // "playing" | "won" | "lost"
 
 WordStop.prototype.getHintLetter = function() {
-    var results = this.currentGuess.indexOf("-");
+    var results = this.currentGuess.indexOf("_");
     if (results !== -1) {
         results = this.currentWord[results];
     }
@@ -94,7 +94,7 @@ WordStop.prototype.reset = function() {
     this.currentWord = this.lexicon.getWord();
     if (this.currentWord) {
         for (let i = 0; i <  this.currentWord.length; i++) {
-            this.currentGuess += "-";
+            this.currentGuess += "_";
         }
         return true;
     } else {

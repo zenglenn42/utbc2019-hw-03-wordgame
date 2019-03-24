@@ -111,6 +111,18 @@ main p#main-label {
   padding-top: 0;
 }
 
+main #word-to-guess {
+  background-color: #eee;
+  border-radius: 0.2em;
+  border: solid 1px teal;
+  color: black;
+  font-family: sans-serif;
+  letter-spacing: 0.25em;
+  margin-left: 1em;
+  padding: 0 0.5em;
+  text-align: center;
+}
+
 main p#main-content {
   color: gray;
   font-size: 0.9em;
