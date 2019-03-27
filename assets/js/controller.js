@@ -8,9 +8,9 @@ function Controller() { }
 
 Controller.prototype.MAX_SEGMENTS = 8;
 Controller.prototype.nextSegment = 1;
-Controller.prototype.allSegmentsDrawn = false;
 Controller.prototype.gameObj = null
 Controller.prototype.guessedLetter = "";
+Controller.prototype.gic = undefined;
 
 Controller.prototype.play = function() {
     this.init()
@@ -19,22 +19,51 @@ Controller.prototype.play = function() {
 // Call this once per session.
 
 Controller.prototype.init = function() {
-    // instantiate model
+    // Instantiate game model.
     this.gameObj = new WordStop();
 
-    // reset controller
+    // Instantiate game input controller.
+    //
+    // This carefully manages the keyboard input event listener and
+    // provides timeout capability for pauses between rounds of play.
+    this.gic = new GameInputController();
+    
+    // Initialize game input controller.
+    let fid = document.getElementById("guessed-letter-form");
+    let uid = document.getElementById("guessed-letter-input");
+    let rid = document.getElementById("status-text");
+    let eventType = "input";
+    let hideViewOnDisable = true;
+    let reFocusOnUnhide = true;
+    let wTimeoutmSecs = 3000; // msec timeout on win
+    let lTimeoutmSecs = 6000; // msec timeout of loss
+    this.gic.init(
+        fid,
+        uid,
+        rid,
+        eventType,
+        hideViewOnDisable,
+        reFocusOnUnhide,
+        wTimeoutmSecs,
+        lTimeoutmSecs
+    );
+    this.gic.inputCallback = this.getInputCallback();
+    this.gic.timeoutCallback = this.getTimeoutCallback();
+    
+    // Reset game controller.
     this.reset();
-
-    // register input listeners
+    
+    // Register event listeners for menu items.
     this.addMenuEventListeners();
-    this.addKeyboardEventListener();
+
+    // Register and enable keyboard input listeners for guessed letters.
+    this.gic.enableInput();
 }
 
 // Call this with each new round.
 
 Controller.prototype.reset = function() {
     this.nextSegment = 1;
-    this.allSegmentsDrawn = false;
     this.resetStopSign();
     this.showGameName();
     this.setFocus();
@@ -71,7 +100,6 @@ Controller.prototype.showLettersUsed = function() {
 Controller.prototype.showWordToGuess = function () {
     let id = document.getElementById("word-to-guess");
     if (id) id.textContent = this.gameObj.currentGuess;
-    this.forceDOMrender();
 }
 
 Controller.prototype.drawStopSegment = function(n) {
@@ -104,7 +132,6 @@ Controller.prototype.drawNextStopSegment = function() {
     }
 
     if (this.nextSegment > this.MAX_SEGMENTS) {
-        this.allSegmentsDrawn = true;
         let id = document.getElementById("stop-text");
         if (id) id.setAttribute("style", "color: white; background-color: red");
     }
@@ -164,26 +191,46 @@ Controller.prototype.getHelpMenuEventCallback = function() {
     return menuCallback;
 }
 
-Controller.prototype.addKeyboardEventListener = function() {
-    let id = document.getElementById("guessed-letter-input");
-    id.addEventListener('keyup', this.getKeyboardEventCallback(), false);
-}
-
-Controller.prototype.getKeyboardEventCallback = function() {
+Controller.prototype.getInputCallback = function() {
     let that = this;
-    function keyboardCallback(e) {
-        that.resetGuessedLetterForm();
-        if (e.keyCode >= 65 && e.keyCode <= 90) {
-            // console.log(e);
-            that.takeTurn(e.key.toLowerCase());
+
+    function inputCallback(e) {
+        console.log("inputCallback");
+
+        that.gic.disableInput();    // quiesce input events
+        that.updateState(e);        // update model
+
+        let statusText = "";
+        switch (that.gameObj.getPlayState()) {
+            case "won": 
+                statusText = "You won! :-)"  
+                that.showStatusText(statusText, "green");
+                // pause before resetting for next round of play
+                setTimeout(that.gic.timeoutCallback, that.gic.lossTimeoutmSecs);
+                break;
+            case "lost":
+                statusText = "You lost."
+                statusText += " Word was: '" + that.gameObj.currentWord + "'";    
+                that.showStatusText(statusText, "rebeccapurple");
+                // pause before resetting for next round of play
+                setTimeout(that.gic.timeoutCallback, that.gic.lossTimeoutmSecs);
+                break;
+            default:
+                that.gic.enableInput();  // re-enable input events for next guessed letter
         }
     }
-    return keyboardCallback;
+    return inputCallback;
 }
 
-// Primary game-flow logic.
+Controller.prototype.updateState = function(e) {
+    var ch = e.data.toLowerCase();
+    if (ch >= "a" && ch <= "z") {
+      this.takeTurn(ch);    // this updates the state of the model
+    }
+}
 
 Controller.prototype.takeTurn = function(userGuess) {
+    console.log("takeTurn ch = ", userGuess);
     this.guessedLetter = userGuess;
     let goodGuess = this.gameObj.takeTurn(userGuess);
     if (!goodGuess) {
@@ -192,66 +239,23 @@ Controller.prototype.takeTurn = function(userGuess) {
     this.showWordToGuess();
     this.showLettersUsed();
     this.showGuessesLeft();
-
-    switch (this.gameObj.getPlayState()) {
-        case "won": 
-            statusText = "You won! :-)"
-            this.syncShowWinner(statusText);
-            break;
-        case "lost":
-            statusText = "You lost."
-            this.syncShowLoser(statusText);
-            break;
-    }
 }
 
-Controller.prototype.syncShowWinner = function(str) {
-    this.showStatusText(str, "green");
-    Controller.prototype.forceDOMrender();
-    // pause before resetting for next round of play
-    let msecsPause = 3000;
-    setTimeout(this.getResetCallback(), msecsPause);
-}
-
-Controller.prototype.getResetCallback = function() {
+Controller.prototype.getTimeoutCallback = function() {
     var that = this;
-    function callback() {
+    function timeoutCallback() {
+        console.log("timeout");
+        // After pause between rounds of play, 
+        // reset controller and re-enable inputs for next round.
         that.reset();
+        that.gic.enableInput();
     }
-    return callback;
-}
-
-Controller.prototype.syncShowLoser = function(str) {
-    str += " Word was: '" + this.gameObj.currentWord + "'";    
-    this.showStatusText(str, "rebeccapurple");
-    Controller.prototype.forceDOMrender();
-    // pause before resetting for next round of play
-    let msecsPause = 6000;
-    setTimeout(this.getResetCallback(), msecsPause);
-}
-
-// It appears I don't need this expedience now that I've added
-// timeouts inbetween rounds of play. :-)
-
-Controller.prototype.forceDOMrender = function() {
-    return;
-    // Since DOM rendering is not synchronous, there are times
-    // when we want to force the browser to render.
-    //
-    // Attempting to trigger DOM repaint by these hacks.
-    //
-    // let mcId = document.getElementById("main-container");
-    // mcId.style.display = "none";
-    // mcId.style.display = "block";
-    // let glfId = document.getElementById("guessed-letter-form");
-    // glfId.style.display = "none";
-    // glfId.style.display = "block";  
+    return timeoutCallback;
 }
 
 Controller.prototype.resetGuessedLetterForm = function() {
     let id = document.getElementById("guessed-letter-form");
     id.reset();
-    this.forceDOMrender();
 }
 
 Controller.prototype.setFocus = function() {
@@ -268,27 +272,6 @@ Controller.prototype.showStatusText = function(text, bgColor = "teal") {
     id.textContent = text;
 }
 
-// Controller.prototype.unHideHintButton = function() {
-//     const mq = window.matchMedia("(max-width: 640px)");
-//     let id = document.querySelector("a#navbar-btn");
-//     if (mq.matches) {
-//         id.style.display = "inline";
-//         id.style.visibility = "visible";
-//     } else {
-//         id.style.visibility = "visible";
-//     }
-// }
-
-// Controller.prototype.HideHintButton = function() {
-//     const mq = window.matchMedia("(max-width: 640px)");
-//     let id = document.getElementById("navbar-btn");
-//     if (mq.matches) {
-//         id.style.display = "none";
-//     } else {
-//         id.style.visibility = "invisible";
-//     }
-// }
-
 function UnitTestController() {
     var cntlr = new Controller();
     cntlr.init();
@@ -302,6 +285,4 @@ function UnitTestController() {
     for (let i = 1; i <= cntlr.MAX_SEGMENTS; i++) {
         cntlr.drawNextStopSegment();
     }
-
-    // cntlr.reset();
 }
