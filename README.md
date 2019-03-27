@@ -9,7 +9,6 @@ With this release, I've added some styling:
 * background image
     * "Dictionary" courtesy of greeblie (Licensed under Creative Commons Attribution)
     * Source: [flickr](https://www.flickr.com/photos/greeblie/3338710223/in/photolist-662Len-82ot2J-9z5LDD-6GYYex-28NWojY-8mb6gc-6bUfZa-8LVo5P-aB6EXd-jQemaL-dqM1kk-5wkSxp-kgvfN-a5okUi-cywmx7-7Z9zYJ-3YG6-9Q74uJ-7vedzj-5EacGR-8X67Vx-86XVSo-bwinBK-8hAoHm-7Chssi-SWcBZ-4DANN8-2XKmhy-e3Unz-9mj5f6-fpwc98-8rR2E3-atnc38-5e5P7P-3YG7-58dUb-8KdRLe-7bJ2xs-8H831G-anApTw-4Ag3Xy-9T2ASa-8UuMmM-7Sbb8Q-GPF1H-3KSoEj-9VDo3r-gtua-5wQ2vV-21Wb7ac)
-* [frosted-glass effect](http://dabblet.com/gist/d9f243ddd7dbffa341a4) (thanks to Lea Verou's 'CSS Secrets' book)
 * more rounded corners
 * better prompt readability
 
