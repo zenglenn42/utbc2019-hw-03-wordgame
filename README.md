@@ -2,6 +2,22 @@
 
 This week I'm implementing my variation on the game of hangman.
 
+## Release 1.1 
+
+With this release, I've added some styling:
+
+* background image
+    * "Dictionary" courtesy of greeblie (Licensed under Creative Commons Attribution)
+    * Source: [flickr](https://www.flickr.com/photos/greeblie/3338710223/in/photolist-662Len-82ot2J-9z5LDD-6GYYex-28NWojY-8mb6gc-6bUfZa-8LVo5P-aB6EXd-jQemaL-dqM1kk-5wkSxp-kgvfN-a5okUi-cywmx7-7Z9zYJ-3YG6-9Q74uJ-7vedzj-5EacGR-8X67Vx-86XVSo-bwinBK-8hAoHm-7Chssi-SWcBZ-4DANN8-2XKmhy-e3Unz-9mj5f6-fpwc98-8rR2E3-atnc38-5e5P7P-3YG7-58dUb-8KdRLe-7bJ2xs-8H831G-anApTw-4Ag3Xy-9T2ASa-8UuMmM-7Sbb8Q-GPF1H-3KSoEj-9VDo3r-gtua-5wQ2vV-21Wb7ac)
+* [frosted-glass effect](http://dabblet.com/gist/d9f243ddd7dbffa341a4) (thanks to Lea Verou's 'CSS Secrets' book)
+* more rounded corners
+* better prompt readability
+
+![alt tag](docs/img/ws-styled.png)
+
+I've also tried to harden the code a bit.  I am seeing some
+nuisance reset calls between rounds which I've tried to address.
+
 ## Release 1.0 (MVP)
 
 Here's what the final minimal viable product looks like:
@@ -37,6 +53,10 @@ The two most interesting implementation blockers that really made me think were:
 
 * [DOM rendering is not synchronous](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/commit/181018e129ad4d3e46fe6bbcd95d3bb2f561005e)
 * [Sharing js-runtime state across multiple html pages takes some thought :-)](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/pull/8)
+
+## Project Board
+
+Checkout the [project board](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/projects/1) to see how I decomposed this effort.
 
 ## Future Enhancements
 
