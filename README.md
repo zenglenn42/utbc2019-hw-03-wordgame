@@ -13,7 +13,7 @@ In addition to the default basic English lexicon, I've added coffee and mytholog
 ![alt tag](docs/img/ws-coffee-time.png)
 ![alt tag](docs/img/ws-greek-mythology.png)
 
-Thematic lexicons were implemented by subclassing the existing Lexicon object and adding an associated background image for the related set of words.
+Thematic lexicons were implemented by subclassing the existing Lexicon object and adding an associated [background image](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/68010d8a3f1afb59da2a70c22e2774f9ebf4aa55/assets/js/lexicon.js#L896) for the related set of words.  The beauty of this approach is the app is thematically extensible merely by editing one JSON object.  The controller and view are data-driven by the model.
 
 ## Release 1.1 
 
@@ -27,8 +27,7 @@ With this release, I've improved the styling with:
 
 ![alt tag](docs/img/ws-styled.png)
 
-I've also tried to harden the code a bit.  I am seeing some
-nuisance reset calls between rounds which I've tried to address.
+I've also tried to harden the code a bit by [abstracting the keyboard input event listener](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/68010d8a3f1afb59da2a70c22e2774f9ebf4aa55/assets/js/input-controller.js#L1) to quiesce events while state is being updated.  I was seeing some nuisance reset calls between rounds which this code addresses.
 
 ## Release 1.0 (MVP)
 
