@@ -2,9 +2,23 @@
 
 This week I'm implementing my variation on the game of hangman.
 
+## Release 1.2 
+
+With this release, I've added selectable thematic lexicons:
+
+![alt tag](docs/img/ws-themes.png)
+
+In addition to the default basic English lexicon, I've added coffee and mythology related themes:
+
+![alt tag](docs/img/ws-basic-english.png)
+![alt tag](docs/img/ws-coffee-time.png)
+![alt tag](docs/img/ws-greek-mythology.png)
+
+Thematic lexicons were implemented by subclassing the existing Lexicon object and adding an associated background image for the related set of words.
+
 ## Release 1.1 
 
-With this release, I've added some styling:
+With this release, I've improved the styling with:
 
 * background image
     * "Dictionary" courtesy of greeblie (Licensed under Creative Commons Attribution)
