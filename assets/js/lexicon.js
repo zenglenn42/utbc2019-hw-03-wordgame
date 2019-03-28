@@ -903,14 +903,28 @@ var ThemedLexiconsCatalog = {
             "zeus"
         ]
     },
-    "Coffee Drinks": {
+    "Coffee Time": {
         "imgSrc": "assets/img/coffee.jpg",
         "words": [
-            "cappucino",
-            "coffee",
+            "affogato",
+            "americano",
+            "barista",
+            "cappuccino",
+            "cortado",
+            "crema",
+            "cupping",
+            "drip",
             "espresso",
-            "frappucino",
-            "machiato"
+            "extraction",
+            "latte",
+            "macchiato",
+            "mocha",
+            "portafilter",
+            "puck",
+            "pull",
+            "redeye",
+            "ristretto",
+            "roast"
         ]
     }
 }
