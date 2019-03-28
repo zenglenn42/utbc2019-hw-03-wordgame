@@ -894,7 +894,7 @@ var ThemedLexiconsCatalog = {
         ]
     },
     "Greek Mythology": {
-        "imgSrc": "assets/img/dictionary.jpg", // TODO: update
+        "imgSrc": "assets/img/greek-mythology.jpg",
         "words": [
             "achilles",
             "apollo",
@@ -904,7 +904,7 @@ var ThemedLexiconsCatalog = {
         ]
     },
     "Coffee Drinks": {
-        "imgSrc": "assets/img/dictionary.jpg", // TODO: update
+        "imgSrc": "assets/img/coffee.jpg",
         "words": [
             "cappucino",
             "coffee",
