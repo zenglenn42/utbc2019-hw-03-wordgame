@@ -10,7 +10,6 @@ With this release, I've added selectable thematic lexicons:
 
 In addition to the default basic English lexicon, I've added coffee and mythology related themes:
 
-![alt tag](docs/img/ws-basic-english.png)
 ![alt tag](docs/img/ws-coffee-time.png)
 ![alt tag](docs/img/ws-greek-mythology.png)
 
