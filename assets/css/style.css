@@ -33,6 +33,15 @@ a.navbar-brand {
   padding: 0.7em 1em;
 }
 
+#theme-select {
+  background: #007bff;
+  border: 1px solid #777;
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 0.8em;
+  margin-left: 0.8em;
+}
+
 @media screen and (max-width: 640px) {
   a.navbar-brand {
     padding: 0.1em 1em;

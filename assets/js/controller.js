@@ -49,6 +49,8 @@ Controller.prototype.init = function() {
     );
     this.gic.inputCallback = this.getInputCallback();
     this.gic.timeoutCallback = this.getTimeoutCallback();
+
+    this.addThemeSelection();
     
     // Reset game controller.
     this.reset();
@@ -79,6 +81,19 @@ Controller.prototype.reset = function() {
     } else {
         this.showStatusText("You've played all the words I know.");
     }
+}
+
+Controller.prototype.addThemeSelection = function() {
+    let pid = document.getElementById("navbar-brand");
+    let sid = document.createElement("select");
+    sid.setAttribute("id", "theme-select");
+    let lexThemes = this.gameObj.lexicons.getLexKeys();
+    for (let theme of lexThemes) {
+        let oid = document.createElement("option");
+        oid.textContent = theme;
+        sid.appendChild(oid);
+    }
+    pid.appendChild(sid);
 }
 
 Controller.prototype.setThemedBackground = function() {
