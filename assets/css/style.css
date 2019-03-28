@@ -33,6 +33,12 @@ a.navbar-brand {
   padding: 0.7em 1em;
 }
 
+@media screen and (max-width: 640px) {
+  a.navbar-brand {
+    padding: 0.1em 1em;
+  }
+}
+
 a.navbar-link {
   color: gray;
   font-size: 0.9em;
@@ -71,56 +77,6 @@ a.navbar-link {
   }
 }
 
-/* For some reason, this snazzy frosted-glass effect
-   causes focus to be lost when clicking inside the
-   input letter form, preventing users from entering
-   letters!  Disabling for now since functionality
-   trumps beauty. */
-
-/* frosted glass effect 
-main,
-main div#main-container::before {
-  background: url("../img/dictionary.jpg") 0 / cover fixed;
-  z-index: -2;
-}
-
-main {
-  background-color: #ddd;
-  flex: 1;
-}
-
-main div#main-container {
-  position: relative;
-  background: hsla(0, 0%, 100%, 0.6);
-  overflow: hidden;
-  border-radius: 0.2em;
-}
-
-main div#main-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  filter: blur(5px);
-  margin: -30px;
-  z-index: -1;
-}
-
-main div#main-container {
-  margin-top: 2em;
-  padding: 1em 1em;
-}
-
-main div#main-container::after {
-  content: " ";
-  display: block;
-  clear: both;
-  background: hsla(0, 0%, 100%, 0.3);
-}
-*/
-
 main {
   background: url("../img/dictionary.jpg") 0 / cover fixed;
 }
@@ -137,18 +93,14 @@ main div#main-container {
   padding: 1em 1em;
 }
 
-/* help image spills outside container otherwise. */
-
+/* Trim down vertical spacing on mobile. */
 @media screen and (max-width: 640px) {
   main div#main-container {
+    margin-top: 1em;
+    padding: 0.5em 0.5em;
     /* Provide a tad of margin on phones. */
     max-width: 95%;
   }
-}
-
-main hr {
-  margin-top: 0;
-  margin-bottom: 0;
 }
 
 main p#main-label {
@@ -166,6 +118,12 @@ main #word-to-guess-prompt {
   border-radius: 0.2em;
 }
 
+@media screen and (max-width: 640px) {
+  main #word-to-guess-prompt {
+    margin-left: 0.3em;
+  }
+}
+
 main #word-to-guess {
   background-color: #eee;
   border-radius: 0.2em;
@@ -181,6 +139,12 @@ main #word-to-guess {
 main p#main-content {
   color: gray;
   font-size: 0.9em;
+}
+
+@media screen and (max-width: 640px) {
+  #main-container > p {
+    margin-bottom: 0;
+  }
 }
 
 main #stop-text {
@@ -203,4 +167,10 @@ footer {
   font-size: 0.5em;
   padding: 2em 1em;
   text-align: center;
+}
+
+@media screen and (max-width: 640px) {
+  footer {
+    padding: 0.5em 1em;
+  }
 }
