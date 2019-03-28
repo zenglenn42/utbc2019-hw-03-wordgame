@@ -7,7 +7,7 @@ Lexicon.prototype.words = [
     "words",
     "go",
     "here"
-];
+];  // We'll typically override this in the ThemedLexicon subclass.
 
 Lexicon.prototype.getWord = function() {
     var rindex = Math.floor(Math.random() * (this.words.length));
