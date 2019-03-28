@@ -944,6 +944,23 @@ var ThemedLexiconsCatalog = {
             "ristretto",
             "roast"
         ]
+    },
+    "Chinese Zodiac": {
+        "imgSrc": "assets/img/chinese-zodiac.jpg",
+        "words": [
+            "chicken",
+            "dog",
+            "dragon",
+            "horse",
+            "monkey",
+            "ox",
+            "pig",
+            "rabbit",
+            "ram",
+            "rat",
+            "snake",
+            "tiger"
+        ]
     }
 }
 
