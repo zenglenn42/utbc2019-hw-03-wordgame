@@ -94,6 +94,24 @@ Controller.prototype.addThemeSelection = function() {
         sid.appendChild(oid);
     }
     pid.appendChild(sid);
+    // Let default model lexicon drive the initial display.
+    let lexIndex = lexThemes.indexOf(this.gameObj.lexKey);
+    sid.selectedIndex = lexIndex;
+    this.addThemeListener();
+}
+
+Controller.prototype.addThemeListener = function() {
+    var that = this;
+    // TODO: Change this to vanilla js :)
+    $(document).on("change", "#theme-select", function(e) {
+        let oldLex = that.gameObj.lexicons.createLexicon(that.gameObj.lexKey);
+        delete oldLex;  // prevent memory leak
+        
+        // that.gameObj.lexKey = e.target.value;
+        that.gameObj.lexKey = $(this).val();
+        that.gameObj.lexicon = that.gameObj.lexicons.createLexicon(that.gameObj.lexKey);
+        that.reset(); // reset controller and game model
+    })
 }
 
 Controller.prototype.setThemedBackground = function() {

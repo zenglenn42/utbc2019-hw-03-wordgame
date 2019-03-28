@@ -51,7 +51,7 @@ Game.prototype.getName = function() {
 
 function WordStop() { 
     WordStop.prototype.lexicons = new ThemedLexicons();
-    WordStop.prototype.lexKey = "Basic English";
+    WordStop.prototype.lexKey = "Basic English"; // Default lexicon.
     WordStop.prototype.lexicon = this.lexicons.createLexicon(this.lexKey);
 }
 WordStop.prototype = new Game();                // Inherit from Game.
