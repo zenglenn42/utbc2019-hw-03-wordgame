@@ -63,6 +63,7 @@ Controller.prototype.init = function() {
 // Call this with each new round.
 
 Controller.prototype.reset = function() {
+    this.setThemedBackground();
     this.nextSegment = 1;
     this.resetStopSign();
     this.showGameName();
@@ -78,6 +79,12 @@ Controller.prototype.reset = function() {
     } else {
         this.showStatusText("You've played all the words I know.");
     }
+}
+
+Controller.prototype.setThemedBackground = function() {
+    let id = document.getElementById("main");
+    let imgSrc = this.gameObj.lexicon.imgSrc;
+    if (id) id.setAttribute("style", `background: url('${imgSrc}') 0 / cover fixed`);
 }
 
 Controller.prototype.showGameName = function() {

@@ -49,7 +49,11 @@ Game.prototype.getName = function() {
 // Define object model for the WordStop game.
 //
 
-function WordStop() { }
+function WordStop() { 
+    WordStop.prototype.lexicons = new ThemedLexicons();
+    WordStop.prototype.lexKey = "Basic English";
+    WordStop.prototype.lexicon = this.lexicons.createLexicon(this.lexKey);
+}
 WordStop.prototype = new Game();                // Inherit from Game.
 WordStop.prototype.__proto__ = Game.prototype;
 WordStop.prototype.name = "Word Stop";          // For user interface skin.
@@ -63,7 +67,7 @@ This is a variation on the game of 'hangman' except the gallows has been \
 replaced by the outline of a Stop sign. \n\n\
 You get 8 wrong guesses at letters in the word before the game is over.\
 ";
-WordStop.prototype.lexicon = new Lexicon();
+// WordStop.prototype.lexicon = new Lexicon();
 WordStop.prototype.playState = "playing"; // "playing" | "won" | "lost"
 
 WordStop.prototype.getHintLetter = function() {
