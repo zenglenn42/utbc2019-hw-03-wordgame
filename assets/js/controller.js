@@ -205,18 +205,20 @@ Controller.prototype.getHintMenuEventCallback = function() {
             let ch = that.gameObj.getHintLetter();
             if (ch !== -1) {
                 // alert("Hint: Try '" + ch + "'");
-                that.setBlur(); // prevent soft keyboard from popping up on hint
+                that.setBlur(); // prevent soft keyboard from popping up.
                 swal({
                     text: ch,
                     buttons: false,
-                    timer: 1500,
+                    timer: 1500
+                }).then(function() {
+                    that.setFocus();
                 });
             } else {
                 // alert("Hint: No more hints left. :-/");
                 swal("No hints left!");
             }
         }
-        that.setFocus();
+        // that.setFocus();
     }
     return menuCallback;
 }
