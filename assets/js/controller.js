@@ -205,21 +205,15 @@ Controller.prototype.getHintMenuEventCallback = function() {
             let ch = that.gameObj.getHintLetter();
             if (ch !== -1) {
                 // alert("Hint: Try '" + ch + "'");
+                that.setBlur(); // prevent soft keyboard from popping up on hint
                 swal({
                     text: ch,
                     buttons: false,
                     timer: 1500,
-                }).then(function() {
-                    that.setFocus();
                 });
             } else {
                 // alert("Hint: No more hints left. :-/");
-                swal({
-                    title: "No hints left!",
-                    text: ":-/",
-                    buttons: false,
-                    timer: 3000,
-                });
+                swal("No hints left!");
             }
         }
         that.setFocus();
@@ -341,6 +335,11 @@ Controller.prototype.resetGuessedLetterForm = function() {
 Controller.prototype.setFocus = function() {
     let id = document.getElementById("guessed-letter-input");
     id.focus();
+}
+
+Controller.prototype.setBlur = function() {
+    let id = document.getElementById("guessed-letter-input");
+    id.blur();
 }
 
 Controller.prototype.showStatusText = function(text, bgColor = "#999") {
