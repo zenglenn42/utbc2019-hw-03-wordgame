@@ -204,7 +204,7 @@ Controller.prototype.getHintMenuEventCallback = function() {
         if (that.gameObj.getPlayState() == "playing") {
             let ch = that.gameObj.getHintLetter();
             if (ch !== -1) {
-                alert("Hint: Try '" + ch + "'");
+                alert(`Hint: ${ch}`);
                 // that.setBlur(); // prevent soft keyboard from popping up.
                 // swal({
                 //     text: ch,
