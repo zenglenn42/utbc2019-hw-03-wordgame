@@ -183,7 +183,7 @@ main #stop-text {
 
 @media screen and (max-width: 640px) {
   main div#stop-sign {
-    clear: right;
+    clear: both;
   }
 }
 
