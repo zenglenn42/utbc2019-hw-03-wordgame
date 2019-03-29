@@ -204,9 +204,23 @@ Controller.prototype.getHintMenuEventCallback = function() {
         if (that.gameObj.getPlayState() == "playing") {
             let ch = that.gameObj.getHintLetter();
             if (ch !== -1) {
-                alert("Hint: Try '" + ch + "'");
+                // alert("Hint: Try '" + ch + "'");
+                swal({
+                    title: ch,
+                    text: "hint",
+                    buttons: false,
+                    timer: 1500,
+                }).then(function() {
+                    that.setFocus();
+                });
             } else {
-                alert("Hint: No more hints left. :-/");
+                // alert("Hint: No more hints left. :-/");
+                swal({
+                    title: "No hints left!",
+                    text: ":-/",
+                    buttons: false,
+                    timer: 3000,
+                });
             }
         }
         that.setFocus();
@@ -217,11 +231,15 @@ Controller.prototype.getHintMenuEventCallback = function() {
 Controller.prototype.getStatsMenuEventCallback = function() {
     let that = this;
     function menuCallback(e) {
-        let winStr = `Wins: ${that.gameObj.wins}`;
+        let winStr =    `Wins: ${that.gameObj.wins}`;
         let lossesStr = `Losses: ${that.gameObj.losses}`;
-        let alertStr = `Game Stats\n${winStr}\n${lossesStr}`;
-        alert(alertStr);
-        that.setFocus();
+        // let alertStr = `Game Stats\n${winStr}\n${lossesStr}`;
+        // alert(alertStr);
+        // that.setFocus();
+        let alertStr = `${winStr}\n${lossesStr}`;
+        swal("Game Stats", alertStr).then(function() {
+            that.setFocus();
+        });
     }
     return menuCallback;
 }
@@ -229,8 +247,10 @@ Controller.prototype.getStatsMenuEventCallback = function() {
 Controller.prototype.getHelpMenuEventCallback = function() {
     let that = this;
     function menuCallback(e) {
+        let helpTitle = `Welcome to ${that.gameObj.name} 🤚`;
         let helpStr = that.gameObj.helpText;
-        alert(helpStr);
+        // alert(`${helpTitle}\n\n${helpStr}`);
+        swal(helpTitle, helpStr);
         that.setFocus();
     }
     return menuCallback;
@@ -258,7 +278,10 @@ Controller.prototype.getInputCallback = function() {
                 borderWidth = "3px";
                 that.showWordToGuess(textColor, borderColor, borderWidth);
                 // pause before resetting for next round of play
-                setTimeout(that.gic.timeoutCallback, that.gic.lossTimeoutmSecs);
+                swal({icon: "success"}).then(function() {
+                    that.gic.timeoutCallback();
+                });
+                // setTimeout(that.gic.timeoutCallback, that.gic.lossTimeoutmSecs);
                 break;
             case "lost":
                 statusText = "You lost."
