@@ -27,7 +27,7 @@ I'm also adding several ui/ux usability tweaks after friends tested it on their 
 
 * On win or loss, I enhacing border width around the guessed word area.  
 
-* On a loss, I fill in the missing letters and render the full word in red rather than report the word on an keyboard-occluded status area at the bottom of the main div.
+* On a loss, I fill in the missing letters and render the full word in red rather than report the word on a keyboard-occluded status area at the bottom of the main div.
 
 ![alt tag](docs/img/ws-ux-nom.png)
 ![alt tag](docs/img/ws-ux-loss.png)
