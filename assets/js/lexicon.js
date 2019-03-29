@@ -945,6 +945,17 @@ var ThemedLexiconsCatalog = {
             "roast"
         ]
     },
+    "Friends": {
+        "imgSrc": "assets/img/friends.jpg",
+        "words": [
+            "rachel",
+            "chandler",
+            "monica",
+            "joey",
+            "ross",
+            "phoebe"
+        ]
+    },
     "Chinese Zodiac": {
         "imgSrc": "assets/img/chinese-zodiac.jpg",
         "words": [
