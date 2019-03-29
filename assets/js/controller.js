@@ -127,19 +127,24 @@ Controller.prototype.showGameName = function() {
 }
 
 Controller.prototype.showGuessesLeft = function () {
-    let id = document.getElementById("guesses-left");
+    let id = document.getElementById("guesses-left-num");
     if (id) id.textContent = this.gameObj.getGuessesLeft();
 }
 
 Controller.prototype.showLettersUsed = function() {
-    let id = document.getElementById("letters-used");
+    let id = document.getElementById("letters-used-text");
     var lettersUsed = this.gameObj.getLettersUsed();
     if (id) id.textContent = lettersUsed;
 }
 
-Controller.prototype.showWordToGuess = function () {
+Controller.prototype.showWordToGuess = function (color = "black", borderColor = "teal", borderWidth = "1px") {
     let id = document.getElementById("word-to-guess");
-    if (id) id.textContent = this.gameObj.currentGuess;
+    if (id) {
+        id.textContent = this.gameObj.currentGuess;
+        id.style.color = color;
+        id.style.borderColor = borderColor;
+        id.style.borderWidth = borderWidth;
+    }
 }
 
 Controller.prototype.drawStopSegment = function(n) {
@@ -241,17 +246,28 @@ Controller.prototype.getInputCallback = function() {
         that.updateState(e);        // update model
 
         let statusText = "";
+        let textColor = "";
+        let borderColor = "";
+        let borderWidth = "";
         switch (that.gameObj.getPlayState()) {
             case "won": 
                 statusText = "You won! :-)"  
-                that.showStatusText(statusText, "green");
+                that.showStatusText(statusText, "teal");
+                textColor = "black";
+                borderColor = "green";
+                borderWidth = "3px";
+                that.showWordToGuess(textColor, borderColor, borderWidth);
                 // pause before resetting for next round of play
                 setTimeout(that.gic.timeoutCallback, that.gic.lossTimeoutmSecs);
                 break;
             case "lost":
                 statusText = "You lost."
-                statusText += " Word was: '" + that.gameObj.currentWord + "'";    
-                that.showStatusText(statusText, "rebeccapurple");
+                that.showStatusText(statusText, "teal");
+                that.gameObj.currentGuess = that.gameObj.currentWord;
+                textColor = "red";
+                borderColor = "black";
+                borderWidth = "3px";
+                that.showWordToGuess(textColor, borderColor, borderWidth);  
                 // pause before resetting for next round of play
                 setTimeout(that.gic.timeoutCallback, that.gic.lossTimeoutmSecs);
                 break;
@@ -303,7 +319,7 @@ Controller.prototype.setFocus = function() {
     id.focus();
 }
 
-Controller.prototype.showStatusText = function(text, bgColor = "teal") {
+Controller.prototype.showStatusText = function(text, bgColor = "#999") {
     let id = document.getElementById("status-text");
     if (id) id.setAttribute("style", 
         `background-color: ${bgColor};
