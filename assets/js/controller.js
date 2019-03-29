@@ -206,8 +206,7 @@ Controller.prototype.getHintMenuEventCallback = function() {
             if (ch !== -1) {
                 // alert("Hint: Try '" + ch + "'");
                 swal({
-                    title: ch,
-                    text: "hint",
+                    text: ch,
                     buttons: false,
                     timer: 1500,
                 }).then(function() {
@@ -247,11 +246,13 @@ Controller.prototype.getStatsMenuEventCallback = function() {
 Controller.prototype.getHelpMenuEventCallback = function() {
     let that = this;
     function menuCallback(e) {
-        let helpTitle = `Welcome to ${that.gameObj.name} 🤚`;
+        let helpTitle = `${that.gameObj.name} 🙂`;
         let helpStr = that.gameObj.helpText;
         // alert(`${helpTitle}\n\n${helpStr}`);
-        swal(helpTitle, helpStr);
-        that.setFocus();
+        // that.setFocus();
+        swal(helpTitle, helpStr).then(function() {
+            that.setFocus();
+        });
     }
     return menuCallback;
 }
