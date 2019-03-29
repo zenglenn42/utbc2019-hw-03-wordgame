@@ -156,15 +156,42 @@ main p#main-content {
   }
 }
 
+main #guessed-letter-form {
+  border: solid 1px #007bff;
+  border-radius: 0.3em;
+}
+
+main #letters-used {
+  float: left;
+  width: 50%;
+}
+
+@media screen and (max-width: 640px) {
+  main #guesses-left {
+    float: right;
+  }
+}
+
+main #guesses-left-num {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 main #stop-text {
   color: white;
 }
 
+@media screen and (max-width: 640px) {
+  main div#stop-sign {
+    clear: right;
+  }
+}
+
 main #status-text {
-  text-align: center;
-  background-color: teal;
-  color: white;
+  background-color: #999;
   border-radius: 0.2em;
+  color: white;
+  text-align: center;
 }
 
 footer {

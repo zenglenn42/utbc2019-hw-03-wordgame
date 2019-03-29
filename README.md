@@ -17,6 +17,21 @@ Thematic lexicons were implemented by subclassing the existing Lexicon object an
 
 Just added a Chinese zodiac theme with beautiful [dragon picture](https://flic.kr/p/dQtgeq) from Luke Price ((CC BY 2.0).
 
+I'm also adding several ui/ux userability tweaks after friends tested it on their phones.  
+
+* I notice the pop-up keyboard takes up almost half the screen, totally occluding the stop-sign rendering.  So you don't get the visual cue of running out of guesses.  So I've opted to enlarge and bold the font for 'Guesses left'.  I've also floated it to the right and tucked it under the input form so it's more visible and mindful while entering letters.
+
+![alt tag](docs/img/ws-ux-gl.png)
+
+* I give better visual cues in non-occluded areas when a round of play is over.
+
+* On win or loss, I enhacing border width around the guessed word area.  
+
+* On a loss, I fill in the missing letters and render the full word in red rather than report the word on an keyboard-occluded status area at the bottom of the main div.
+
+![alt tag](docs/img/ws-ux-nom.png)
+![alt tag](docs/img/ws-ux-loss.png)
+
 ## Release 1.1 
 
 With this release, I've improved the styling with:
