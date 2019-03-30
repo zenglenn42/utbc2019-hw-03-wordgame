@@ -107,7 +107,6 @@ Controller.prototype.addThemeListener = function() {
         let oldLex = that.gameObj.lexicons.createLexicon(that.gameObj.lexKey);
         delete oldLex;  // prevent memory leak
         
-        // that.gameObj.lexKey = e.target.value;
         that.gameObj.lexKey = $(this).val();
         that.gameObj.lexicon = that.gameObj.lexicons.createLexicon(that.gameObj.lexKey);
         that.reset(); // reset controller and game model
@@ -209,18 +208,12 @@ Controller.prototype.getHintMenuEventCallback = function() {
         if (that.gameObj.getPlayState() == "playing") {
             let ch = that.gameObj.getHintLetter();
             if (ch !== -1) {
+                // Wold like to use swal (sweetalert) here
+                // but it triggers the pop-up keyboard on mobile,
+                // occluding the hint. So using vanilla alert for now.
                 alert(`Hint: ${ch}`);
-                // that.setBlur(); // prevent soft keyboard from popping up.
-                // swal({
-                //     text: ch,
-                //     buttons: false,
-                //     timer: 1500
-                // }).then(function() {
-                //     that.setFocus();
-                // });
             } else {
                 alert("Hint: No more hints left. :-/");
-                // swal("No hints left!");
             }
         }
         that.setFocus();
@@ -233,9 +226,6 @@ Controller.prototype.getStatsMenuEventCallback = function() {
     function menuCallback(e) {
         let winStr =    `Wins: ${that.gameObj.wins}`;
         let lossesStr = `Losses: ${that.gameObj.losses}`;
-        // let alertStr = `Game Stats\n${winStr}\n${lossesStr}`;
-        // alert(alertStr);
-        // that.setFocus();
         let alertStr = `${winStr}\n${lossesStr}`;
         swal("Game Stats", alertStr).then(function() {
             that.setFocus();
@@ -249,8 +239,6 @@ Controller.prototype.getHelpMenuEventCallback = function() {
     function menuCallback(e) {
         let helpTitle = `${that.gameObj.name} 🙂`;
         let helpStr = that.gameObj.helpText;
-        // alert(`${helpTitle}\n\n${helpStr}`);
-        // that.setFocus();
         swal(helpTitle, helpStr).then(function() {
             that.setFocus();
         });
