@@ -117,7 +117,12 @@ Controller.prototype.addThemeListener = function() {
 Controller.prototype.setThemedBackground = function() {
     let id = document.getElementById("main");
     let imgSrc = this.gameObj.lexicon.imgSrc;
-    if (id) id.setAttribute("style", `background: url('${imgSrc}') 0 / cover fixed`);
+    if (id) {
+        id.setAttribute("style", 
+            `background: url('${imgSrc}') 0 / cover fixed; 
+            background-position: center center;`
+        );
+    }
 }
 
 Controller.prototype.showGameName = function() {
