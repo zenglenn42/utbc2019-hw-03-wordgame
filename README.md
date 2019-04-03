@@ -95,7 +95,7 @@ Checkout the [project board](https://github.com/zenglenn42/utbc2019-hw-03-wordga
 ## Future Enhancements
 
 * The design would benefit from some styling.  Replace the stop sign segments with a stop sign image outlined by a CSS polygon to mark progress.
-* Themes could be added that affect the look and feel (backgrounds, fonts, colors, sounds) and include thematic lexicons.  The theme could be owned by the WordStop object and made selectable at runtime through a drop-down menu off the navbar.
+* Themes could be added that affect the look and feel (backgrounds, fonts, colors, sounds) and include thematic lexicons.  The theme could be owned by the WordStop object and made selectable at runtime through a drop-down menu off the navbar. [Done ✅](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/commit/07e1f450b430d25df626d8261b1bc8e7e377ba51)
 
 ## Designer's Log
 
