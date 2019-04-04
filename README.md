@@ -70,15 +70,12 @@ Winning and losing look like this:
 
 ## Design & Implementation Features
 
-- [MVC](https://medium.freecodecamp.org/model-view-controller-mvc-explained-through-ordering-drinks-at-the-bar-efcba6255053) based (see [assets/js/model.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/model.js) & [assets/js/controller.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/controller.js))
-- [Closures](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/controller.js#L125) are used in the controller to return event handlers that set 'this' to my objects
-- In the model, I use [inheritance](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/model.js#L53) to subclass the WordStop game off a Game superclass.
-
-In theory, it would be easy enough to subclass off the WordStop game to create something that only served up palindromes, for example. Even the name of the game and [help text](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/ad02a309a5ff547a1d9a35de1a360b889b817f9b/assets/js/model.js#L60) are in the model.
-
-- The implementation is responsive to different sized viewports.
-- The [lexicon](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/cbd273864c0a01aa345b1f7fcdd9163810c17411/assets/js/lexicon.js#L1) was created by post-processing a basic list of English words from [here](https://simple.wikipedia.org/wiki/Wikipedia:Basic_English_ordered_wordlist).
-- In the html, I used a dedicated <input> text control so on mobile devices, the keyboard would pop-up.
+* [Model View Controller (MVC)](https://developer.chrome.com/apps/app_frameworks) software pattern (see [assets/js/model.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/model.js) & [assets/js/controller.js](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/master/assets/js/controller.js))
+* [Closures](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/controller.js#L125) are used in the controller to return event handlers that set 'this' to my objects
+* In the model, I use [inheritance](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/f08e605b03e157e77a4cade64a6c7c530c6ea63d/assets/js/model.js#L53) to subclass the WordStop game off a Game superclass.
+* The implementation is responsive to different sized viewports.
+* The [lexicon](https://github.com/zenglenn42/utbc2019-hw-03-wordgame/blob/cbd273864c0a01aa345b1f7fcdd9163810c17411/assets/js/lexicon.js#L1) was created by post-processing a basic list of English words from [here](https://simple.wikipedia.org/wiki/Wikipedia:Basic_English_ordered_wordlist).
+* In the html, I used a dedicated <input> text control so on mobile devices, the keyboard would pop-up.
 
 The two most interesting implementation blockers that really made me think were:
 
