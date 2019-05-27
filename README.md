@@ -1,4 +1,4 @@
-# utbc2019-hw-03-wordgame
+# [Word Stop 🛑 (demo)](https://zenglenn42.github.io/utbc2019-hw-03-wordgame/)
 
 This week I'm implementing my variation on the game of hangman.
 
